@@ -6,7 +6,12 @@ export default class PlayerCard extends React.Component {
 
     render() {
         return (
-            <h1>PlayerCard</h1>
+            <div>
+                <img src={this.props.player.avatar}></img>
+                <h1>{this.props.player.name}</h1>
+                <p>Description: {this.props.player.description}</p>
+                <p>Description: {this.props.player.description}</p>
+            </div>
         )
     }
 }

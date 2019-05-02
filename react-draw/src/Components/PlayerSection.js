@@ -1,24 +1,27 @@
-// import React from 'react'
-// import PlayerCard from './PlayerCard';
+import React from 'react'
+import PlayerCard from './PlayerCard';
 
-// export default class PlayerSection extends React.Component {
+export default class PlayerSection extends React.Component {
 
-//     state = {
-//         players: []
-//     }
+    state = {
+        players: []
+    }
 
-//     componentDidMount() {
-//         fetch(localhost)
-//             .then(response => response.json)
-//             .then(allPlayers => this.setState({
-//                 players: allPlayers
-//             }))
-//     }
+    componentDidMount() {
+        fetch("http://localhost:3000/players")
+            .then(response => response.json())
+            .then(allPlayers => this.setState({
+                players: allPlayers
+            }))
+    }
 
 
-//     render() {
-//         return (
-//             this.state.players.map( player => <PlayerCard player = {player} />
-//         )
-//     }
-// }
+    render() {
+        console.log(this.state.players)
+        return (
+            <div>
+                {this.state.players.map(player => (<PlayerCard player = {player}/>))}            
+            </div>
+        )
+    }
+}
