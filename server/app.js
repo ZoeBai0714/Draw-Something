@@ -1,6 +1,9 @@
+const Player = require('./models/Player')
 const app = require('express')();
 const http = require('http');
 const socketIO = require("socket.io");
+const cors = require('cors');
+app.use(cors());
 
 
 const server = http.createServer(app); // initialize server
@@ -28,6 +31,19 @@ app.get('/', (req, res) => {
   app.js is the entry point
   build models and controllers for backend
 */
+app.get('/players', (req, res) => {
+    Player.findAll()
+        .then( players => {
+            res.json(players)
+        })
+})
+
+app.get('/players/:id', (req, res) => {
+    Player.findByPk(req.params.id)
+        .then( player => {
+            res.json(player)
+        })
+})
 
 
 const Sequelize = require('sequelize');
