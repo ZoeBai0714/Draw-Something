@@ -1,12 +1,15 @@
 import React from 'react';
+import DrawerScreen from './Containers/DrawerScreen';
 
 
-function App() {
+class App extends React.Component {
+  render() {
   return (
     <div className="App">
-      
+      <DrawerScreen/>
     </div>
   );
+  }
 }
 
 export default App;
