@@ -14,7 +14,7 @@ app.get('/', (req, res) => {
   build models and controllers for backend
 */
 
-/* 
+
 const Sequelize = require('sequelize');
 
 const sequelize = new Sequelize({
@@ -30,4 +30,4 @@ sequelize
  .catch(err => {
      console.log('unable to connect', err)
  })
-*/
+
