@@ -2,30 +2,32 @@ const Player = require('./models/Player')
 
 Player.sync()
 
-//Player.destroy({ where: { id: [1] }})
 
 const players = [
     {
         "name": "Bobby",
         "avatar":"a link ",
-        "wins": 0
+        "description": "I cannot draw to save my life. But I can laugh at what I draw."
         
     },
     {
         "name": "Jack",
         "avatar":"a link ",
-        "wins": 0
+        "description": "I secretly go to art events on the weekends."
     },
     {
         "name": "Zoe",
-        "avatar":"a link ",
-        "wins": 0
+        "avatar": "./avatars/zoe.png",
+        "description": "I'm the most skilled artist here."
     },
     {
         "name": "Josh",
         "avatar":"a link ",
-        "wins": 0
+        "description": "I make beautiful things through code and food."
     }
-]
+];
 
-players.forEach( player => Player.create(player) )
+(async function(){
+    await Player.destroy({ where: {  }})
+    players.forEach( player => Player.create(player) )
+})()
