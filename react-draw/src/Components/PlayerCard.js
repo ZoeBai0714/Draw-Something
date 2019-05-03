@@ -1,17 +1,16 @@
 import React from 'react'
-import Person from '../Components/Player'
 
 export default class PlayerCard extends React.Component {
 
 
 
     render() {
-        console.log(this.props)
+        
         return (
             <div style={{float: "right", top: 100}}className="ui column">
                 <div className="ui card">
                     <div className="image">
-                        <img src={this.props.player.avatar}></img>
+                        <img src={this.props.player.avatar} alt=""></img>
                     </div>
                     <div className="content">
                         <h3>{this.props.player.name}</h3>
