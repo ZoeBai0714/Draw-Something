@@ -2,7 +2,7 @@ import React from 'react'
 import {SketchPicker} from 'react-color'
 
 export default class ColorPicker extends React.Component {
-
+ /*
     state = {
         currentColor: '#fff'
     }
@@ -14,10 +14,10 @@ export default class ColorPicker extends React.Component {
         })
     }
 
-
+ */
     render() {
         return (
-            <SketchPicker color = {this.state.currentColor} onChangeComplete = {this.handleChange}/>
+            <SketchPicker color = {this.props.currentColor} onChangeComplete = {this.props.handleChange}/>
         )
     }
 }

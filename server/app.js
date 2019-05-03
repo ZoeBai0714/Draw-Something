@@ -32,16 +32,6 @@ io.on("connection", socket => {
 const port = 3000
 server.listen(port, () => console.log(`Listening on port ${port}`));
 
-/*
-app.get('/', (req, res) => {
-    res.send('Hello World!')
-})
-*/
-
-/*
-  app.js is the entry point
-  build models and controllers for backend
-*/
 app.get('/players', (req, res) => {
     Player.findAll()
         .then( players => {
@@ -56,11 +46,11 @@ app.get('/players/:id', (req, res) => {
         })
 })
 
-
+/* 
 const Sequelize = require('sequelize');
 
 const sequelize = new Sequelize({
-    dialect: 'sqlite',
+    dialect: 'sqlite'
     storage: './database.sqlite'
 });
 
@@ -72,4 +62,21 @@ sequelize
  .catch(err => {
      console.log('unable to connect', err)
  })
+
+ */
+
+
+
+
+
+/*
+app.get('/', (req, res) => {
+    res.send('Hello World!')
+})
+*/
+
+/*
+  app.js is the entry point
+  build models and controllers for backend
+*/
 
