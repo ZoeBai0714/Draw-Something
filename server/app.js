@@ -24,8 +24,8 @@ io.on("connection", socket => {
     socket.on('users.index', async (users, respond) => {
         console.log(users)
         let players = await Player.findAll()
-        console.log(users)
-        respond(users)
+        console.log(players)
+        respond(players)
     })
 
     //socket.on('disconnect', () => console.log("Client disconnected"))
