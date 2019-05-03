@@ -15,8 +15,8 @@ const Player = sequelize.define('player', {
     avatar: {
         type: STRING
     },
-    wins:{
-        type: INTEGER
+    description:{
+        type: STRING
     }
 });
 
