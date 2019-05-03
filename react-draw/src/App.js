@@ -7,7 +7,7 @@ class App extends React.Component {
   render() {
   return (
     <div className="App">
-      <DrawerScreen draw = {this.props.draw} stopDraw = {this.props.stopDraw}/>
+      <DrawerScreen />
     </div>
   );
   }
