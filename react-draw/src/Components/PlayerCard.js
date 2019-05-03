@@ -1,4 +1,5 @@
 import React from 'react'
+import Person from '../Components/Player'
 
 export default class PlayerCard extends React.Component {
 
