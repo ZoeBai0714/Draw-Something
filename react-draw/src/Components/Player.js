@@ -16,11 +16,7 @@ export default class Player extends Component {
             console.log(returnOfTheBackend)
         });
     }
-    /*
-    componentDidMount() {
-        this.sendState()     
-    }
-    */
+  
     handleChange = (e) => {
         this.setState({username: e.target.value})
     }
