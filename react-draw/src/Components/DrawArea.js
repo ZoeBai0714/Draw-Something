@@ -1,6 +1,6 @@
 import React from 'react';
 import '../DrawArea.css'
-
+    
 
 export default class DrawArea extends React.Component{
   state = {
@@ -27,10 +27,11 @@ export default class DrawArea extends React.Component{
     return this.canvas().getContext("2d");
   }
 
+  //set the starting point of user cursor
   startDrawCursor = (e) =>{
     this.setState({
       isDrawing: true,
-      lastX: e.nativeEvent.offsetX,  //set the starting point of user cursor
+      lastX: e.nativeEvent.offsetX,  
       lastY: e.nativeEvent.offsetY
     })
   }
@@ -61,8 +62,12 @@ export default class DrawArea extends React.Component{
         lastY: e.nativeEvent.offsetY
       })
    }
+   console.log(this.state.lastX)
   }
    
+  stopDraw = () => {
+    this.setState({isDrawing: false})
+  }
 
  componentDidMount = () =>{
    const canvas = this.canvas()
@@ -84,8 +89,19 @@ export default class DrawArea extends React.Component{
   render(){
       return(
           <div>
-            <canvas onMouseMove = {this.draw} onMouseDown = {(e)=> this.startDrawCursor(e)} /* onMouseUp = {this.props.stopDraw} currentColor = {this.props.currentColor} */ id="drawing" fullscreen={true}></canvas>
-          </div>
+            <canvas onMouseMove = {this.draw} 
+                    onMouseDown = {(e)=> this.setState({
+                isDrawing: true,
+                lastX: e.nativeEvent.offsetX,  
+                lastY: e.nativeEvent.offsetY
+                 })} 
+                onMouseUp = {this.stopDraw} /* currentColor = {this.props.currentColor} */ id="drawing" fullscreen={true}></canvas>
+                    </div>
       )
   }
 }
+
+/*
+  lastX: e.nativeEvent.offsetX,  
+  lastY: e.nativeEvent.offsetY
+*/
