@@ -27,7 +27,9 @@ const players = [
     }
 ];
 
+/*
 (async function(){
     await Player.destroy({ where: {  }})
     players.forEach( player => Player.create(player) )
 })()
+*/

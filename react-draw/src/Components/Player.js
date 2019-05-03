@@ -42,7 +42,6 @@ export default class Player extends Component {
                     <button type="submit">Log in</button>
                 </div>
                 </form>
-                Hello
             </div>
         )    
     }

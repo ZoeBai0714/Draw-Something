@@ -19,11 +19,13 @@ io.on("connection", socket => {
             .then( users => {
                 respond(userLogin)
             })
-        /*
-        const users = [ ]
-        users.push(response)
+    })
+
+    socket.on('users.index', async (users, respond) => {
         console.log(users)
-        */
+        let players = await Player.findAll()
+        console.log(users)
+        respond(users)
     })
 
     //socket.on('disconnect', () => console.log("Client disconnected"))
