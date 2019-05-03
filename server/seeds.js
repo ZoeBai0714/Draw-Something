@@ -1,6 +1,5 @@
 const Player = require('./models/Player')
 
-Player.sync()
 
 
 const players = [
@@ -28,6 +27,8 @@ const players = [
 ];
 
 (async function(){
+    await Player.drop()
+    await Player.sync()
     await Player.destroy({ where: {  }})
     players.forEach( player => Player.create(player) )
 })()

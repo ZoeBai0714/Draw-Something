@@ -21,7 +21,3 @@ const Player = sequelize.define('player', {
 });
 
 module.exports = Player
-
-sequelize.drop().then( () => {
-    sequelize.sync()
-})
