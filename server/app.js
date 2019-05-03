@@ -35,11 +35,12 @@ app.get('/players/:id', (req, res) => {
         })
 })
 
-/* 
+
+/*
 const Sequelize = require('sequelize');
 
 const sequelize = new Sequelize({
-    dialect: 'sqlite'
+    dialect: 'sqlite',
     storage: './database.sqlite'
 });
 

@@ -17,7 +17,7 @@ export default class PlayerSection extends React.Component {
 
 
     render() {
-        console.log(this.state.players)
+        //console.log(this.state.players)
         return (
             <div>
                 {this.state.players.map(player => (<PlayerCard player = {player}/>))}            
