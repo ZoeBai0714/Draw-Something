@@ -1,6 +1,6 @@
 import React from 'react';
 import '../DrawArea.css'
-
+    
 
 export default class DrawArea extends React.Component{
   state = {
