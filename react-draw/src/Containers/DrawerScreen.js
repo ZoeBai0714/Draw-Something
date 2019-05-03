@@ -7,7 +7,7 @@ import '../DrawArea.css'
 
 export default class DrawerScreen extends React.Component {
       state = {
-        currentColor: '#fff'
+        currentColor: ''
       }     
 
       draw = () =>{
@@ -19,15 +19,17 @@ export default class DrawerScreen extends React.Component {
       }
 
       handleChange = (color) =>{
+        console.log(color)
         this.setState({
             currentColor: color.hex
         })
       }
 
     render() {
+      console.log(this.state.currentColor)
         return (
             <div>
-                <DrawArea fullscreen={true} width="500" height="500" />
+                <DrawArea fullscreen={true} width="500" height="500" currentColor = {this.state.currentColor} />
                 <ColorPicker currentColor = {this.state.currentColor} handleChange = {this.handleChange}/>
                 <PlayerSection />
             </div>

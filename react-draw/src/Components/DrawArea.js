@@ -3,20 +3,22 @@ import '../DrawArea.css'
     
 
 export default class DrawArea extends React.Component{
-  state = {
-    isDrawing: false,
-    lastX: 0,
-    lastY: 0,
-    hue: 1,
-    direction: true,
-    controlDisplay: "none",
-    controlLeft: "100%",
-    customColor: false,
-    color: "#000000",
-    customStroke: false,
-    maxWidth: 100,
-    minWidth: 5
-  }
+  
+  
+    state = {
+      isDrawing: false,
+      lastX: 0,
+      lastY: 0,
+      // hue: 1,
+      direction: true,
+      controlDisplay: "none",
+      controlLeft: "100%",
+      customColor: `${this.props.currentColor}`,
+      // color: `${this.props.currentColor}`,
+      customStroke: false,
+      maxWidth: 100,
+      minWidth: 5
+    }
 
   //grab the canvas
   canvas = ()=> {
@@ -66,8 +68,8 @@ export default class DrawArea extends React.Component{
     
     //set the color here
     if(this.state.isDrawing){
-        if(this.state.color && this.state.customColor ) {
-          ctx.strokeStyle = this.state.color;
+        if(this.props.currentColor) {
+          ctx.strokeStyle = this.props.currentColor
         } else {
           ctx.strokeStyle = `hsl(${this.state.hue}, 100%, 50%)`;
         }
@@ -76,13 +78,12 @@ export default class DrawArea extends React.Component{
       ctx.moveTo(this.state.lastX, this.state.lastY);
       ctx.lineTo(e.nativeEvent.offsetX, e.nativeEvent.offsetY); //create a line betwwen coordinates
       ctx.stroke();// display that line created above
-      hue ++ 
-
-      if(hue >= 360) {   //limit the color in a range
-        hue = 1
-      }
+      // hue ++ 
+      // if(hue >= 360) {   //limit the color in a range
+      //   hue = 1
+      // }
       this.setState({   //after starting cursor continue change x and y coordinates 
-        hue: hue,
+        // hue: hue,
         lastX: e.nativeEvent.offsetX,
         lastY: e.nativeEvent.offsetY
       })
