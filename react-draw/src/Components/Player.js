@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import PlayerCard from './PlayerCard.js'
 import socketIO from 'socket.io-client';
 
 const io = socketIO('http://localhost:3000/')
