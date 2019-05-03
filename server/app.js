@@ -15,15 +15,17 @@ io.on("connection", socket => {
     console.log('connected')
     socket.on('welcome.index', (userLogin, respond) => {
         console.log(userLogin)
-        Player.create({name: userLogin.state.username})
+        Player.create({name: userLogin.state.username, description: userLogin.state.description})
             .then( users => {
                 respond(userLogin)
             })
-        /*
-        const users = [ ]
-        users.push(response)
+    })
+
+    socket.on('users.index', async (users, respond) => {
         console.log(users)
-        */
+        let players = await Player.findAll()
+        console.log(players)
+        respond(players)
     })
 
     //socket.on('disconnect', () => console.log("Client disconnected"))

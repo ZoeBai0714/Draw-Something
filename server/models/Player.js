@@ -21,5 +21,3 @@ const Player = sequelize.define('player', {
 });
 
 module.exports = Player
-
-sequelize.sync()
