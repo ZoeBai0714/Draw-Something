@@ -1,5 +1,6 @@
 #drawing {
-    border: 5px;
+    border: solid;
+    border-radius: 25px;
 }
 
 /*

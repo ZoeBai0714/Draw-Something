@@ -94,12 +94,6 @@ export default class DrawArea extends React.Component{
 
 
 
-   
-  
-
-
- 
-
   render(){
       return(
           <div>
