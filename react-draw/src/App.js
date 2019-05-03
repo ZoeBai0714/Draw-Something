@@ -1,19 +1,18 @@
 import React from 'react';
 import DrawerScreen from './Containers/DrawerScreen';
-import socketIO from 'socket.io-client'
 
-const io = socketIO('http://localhost:3000')
-window.io = io
 
 class App extends React.Component {
 
+  /*
   state = {
     hello: 'swagger'
   }
-
+                                                  // Dont worry about this garbage (testing backend)
   componentDidMount() {
-    io.emit('welcome.index', {hello: 'hello'})
+    io.emit('welcome.index', {state: this.state})
   }
+  */
 
   render() {
   return (
