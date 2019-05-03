@@ -7,26 +7,22 @@ window.io = io
 
 export default class Player extends Component {
 
-    state = {
-        username: " "
-    }
-
-    sendState() {
-        io.emit('welcome.index', {state: this.state}, returnOfTheBackend => {
+    
+    sendState(e) {
+        io.emit('welcome.index', {state: {
+            username: e.target[0].value,
+            description: e.target[1].value
+        }}, returnOfTheBackend => {
             console.log(returnOfTheBackend)
         });
     }
   
-    handleChange = (e) => {
-        this.setState({username: e.target.value})
-    }
-
     
     handleSubmit = (e) => {
         e.preventDefault()
-        this.sendState()
-        this.setState({username: e.target[0].value})
+        this.sendState(e)
         e.target[0].value = " "
+        e.target[1].value = " "
     }
 
 
@@ -37,7 +33,11 @@ export default class Player extends Component {
                 <div>
                     <label>
                         Username
-                        <input onChange = { e => this.handleChange(e)} id="username" name="username" type="text" />
+                        <input  id="username" name="username" type="text" />
+                    </label>
+                    <label>
+                        description
+                        <input id="description" name="description" type="text"/>
                     </label>
                     <button type="submit">Log in</button>
                 </div>
