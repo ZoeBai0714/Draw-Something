@@ -11,8 +11,19 @@ const io = socketIO(server); // create socket using server ^
 
 
 io.on("connection", socket => {
-    socket.on('welcome.index', response => {
-        console.log(response)
+
+    console.log('connected')
+    socket.on('welcome.index', (userLogin, respond) => {
+        console.log(userLogin)
+        Player.create({name: userLogin.state.username})
+            .then( users => {
+                respond(userLogin)
+            })
+        /*
+        const users = [ ]
+        users.push(response)
+        console.log(users)
+        */
     })
 
     //socket.on('disconnect', () => console.log("Client disconnected"))

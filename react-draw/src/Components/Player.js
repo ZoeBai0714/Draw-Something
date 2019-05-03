@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
-import socketIO from 'socket.io-client'
+import PlayerCard from './PlayerCard.js'
+import socketIO from 'socket.io-client';
 
-const io = socketIO('http://localhost:3000')
+const io = socketIO('http://localhost:3000/')
 window.io = io
 
 export default class Player extends Component {
@@ -11,7 +12,9 @@ export default class Player extends Component {
     }
 
     sendState() {
-        io.emit('welcome.index', {state: this.state})
+        io.emit('welcome.index', {state: this.state}, returnOfTheBackend => {
+            console.log(returnOfTheBackend)
+        });
     }
     /*
     componentDidMount() {
@@ -22,18 +25,27 @@ export default class Player extends Component {
         this.setState({username: e.target.value})
     }
 
+    
+    handleSubmit = (e) => {
+        e.preventDefault()
+        this.sendState()
+        this.setState({username: e.target[0].value})
+        e.target[0].value = " "
+    }
+
 
     render() {
-        this.sendState()
         return (
             <div className="Person">
-            <form onSubmit={this.handleSubmit}>
-                <label>
-                Username:
-                <input type="text" name="name" onChange={this.handleChange}/>
-                </label>
-                <input type="submit" value="Submit" />
-            </form>
+                <form onSubmit = {e=>{this.handleSubmit(e)}}>
+                <div>
+                    <label>
+                        Username
+                        <input onChange = { e => this.handleChange(e)} id="username" name="username" type="text" />
+                    </label>
+                    <button type="submit">Log in</button>
+                </div>
+                </form>
                 Hello
             </div>
         )    
