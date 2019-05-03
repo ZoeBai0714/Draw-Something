@@ -1,13 +1,14 @@
 import React from 'react';
 import DrawerScreen from './Containers/DrawerScreen';
-
+import Login from './Components/Player'
 
 class App extends React.Component {
 
   render() {
   return (
     <div className="App">
-      <DrawerScreen />
+      <Login/>
+      <DrawerScreen draw = {this.props.draw} stopDraw = {this.props.stopDraw}/>
     </div>
   );
   }
