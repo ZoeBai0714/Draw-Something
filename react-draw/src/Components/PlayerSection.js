@@ -11,32 +11,25 @@ export default class PlayerSection extends React.Component {
         players: []
     }
 
-  /*  
-    setState = () => {
+    changeState = () => {
         io.emit('users.index', {state: this.state.players}, returnPlayers => {
             console.log(returnPlayers)
             this.setState({players: returnPlayers})
         })
+        io.on('users.new',user =>{
+            this.setState({players: [ ...this.state.players, user]})
+        })
     }
-
-*/
-
+    
     componentDidMount() {
-        //this.setState()
-        io.emit('users.index', {state: this.state.players}, returnPlayers => {
-            console.log(returnPlayers)
-            this.setState({players: returnPlayers})
-        })
+        this.changeState()
     }
-/*
-    componentDidUpdate() {
-        fetch("http://localhost:3000/players")
-            .then(response => response.json())
-            .then(allPlayers => this.setState({
-                players: allPlayers
-            }))
-    }
-*/
+    
+
+    // shouldComponentUpdate = (prevState) => {
+    //     if(prevState.players !== this.state.players) this.changeState() 
+    // }
+
     render() {
         console.log(this.state.players)
         return (
