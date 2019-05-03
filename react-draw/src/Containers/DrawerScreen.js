@@ -2,6 +2,7 @@ import React from 'react'
 import DrawArea from '../Components/DrawArea'
 import ColorPicker from '../Components/ColorPicker';
 import PlayerSection from '../Components/PlayerSection';
+import '../DrawArea.css'
 
 
 export default class DrawerScreen extends React.Component {
@@ -26,7 +27,7 @@ export default class DrawerScreen extends React.Component {
     render() {
         return (
             <div>
-                <DrawArea draw = {this.draw} stopDraw = {this.stopDraw} currentColor = {this.state.currentColor}/>
+                <DrawArea fullscreen={true} width="500" height="500" />
                 <ColorPicker currentColor = {this.state.currentColor} handleChange = {this.handleChange}/>
                 <PlayerSection />
             </div>

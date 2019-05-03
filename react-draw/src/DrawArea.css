@@ -1,4 +1,9 @@
 #drawing {
+    border: 5px;
+}
+
+/*
+#drawing {
     position: relative;
     margin-left: 80px; 
     border: solid; 
@@ -6,3 +11,4 @@
     width: 80%; 
     height: 100%;
 }
+*/
