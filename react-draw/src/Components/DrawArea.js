@@ -3,19 +3,15 @@ import '../DrawArea.css'
 
 
 export default class DrawArea extends React.Component{
+  isPainting = false;
 
-  draw = () =>{
-    console.log('mouse down')
-  }
-
-  stopDraw = () =>{
-    console.log('mouse up')
-  }
 
   render(){
+      //console.log(this.props.currentColor)
       return(
           <div>
-            <canvas onMouseDown = {this.draw} onMouseUp = {this.stopDraw} id="drawing"></canvas>
+            <canvas onMouseDown = {this.props.draw} onMouseUp = {this.props.stopDraw} currentColor = {this.props.currentColor} id="drawing"></canvas>
+          
           </div>
       )
   }
