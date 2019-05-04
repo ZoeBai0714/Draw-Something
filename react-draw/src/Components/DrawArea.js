@@ -9,6 +9,7 @@ export default class DrawArea extends React.Component{
       isDrawing: false,
       lastX: 0,
       lastY: 0,
+      canvasURL: " ",
       // hue: 1,
       direction: true,
       controlDisplay: "none",
@@ -29,9 +30,16 @@ export default class DrawArea extends React.Component{
     return this.canvas().getContext("2d");
   }
 
+  changeState = () => {
+    const canvas = this.canvas()
+    this.setState({
+      canvasURL: canvas.toDataURL()
+    })
+  }
 
  componentDidMount = () =>{
   const canvas = this.canvas()
+  console.log(canvas.toDataURL())
   const ctx = this.ctx()
   //set the window size for different clients' browser, make sure it is consistent
   if(this.props.fullscreen === true){
