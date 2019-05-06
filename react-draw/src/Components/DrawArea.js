@@ -113,6 +113,8 @@ export default class DrawArea extends React.Component{
           ctx.stroke();
           ctx.strokeStyle = this.props.currentColor || 'red'//`hsl(${this.state.hue}, 100%, 50%)`
           this.randomDots(e)
+        }else if(this.state.mode == "stars"){
+          this.stars(e) 
         } 
       
       }
@@ -157,6 +159,10 @@ export default class DrawArea extends React.Component{
       }else if(value == "none"){
         this.setState({
           mode: ""
+        })
+      }else if(value == "stars"){
+        this.setState({
+          mode:"stars"
         })
       }
 
@@ -208,7 +214,11 @@ export default class DrawArea extends React.Component{
   } 
    }
 
+  stars = (e) =>{
+    let getRandomInt = (max, min) => Math.floor(Math.random() * (max - min + 1)) + min;  //max min
+    const ctx = this.ctx()
 
+  }
 
   render(){
     //console.log(this.state)
@@ -234,7 +244,55 @@ export default class DrawArea extends React.Component{
   }
 }
 
-/* problems need to fix:
- 1.select drop down menu value not updating
- 2.after randomDots, if we change it to shadow, the line opacity can't change back
+/* stars:
+ function drawStar(x, y) {
+  var length = 15;
+  ctx.save();
+  ctx.translate(x, y);
+  ctx.beginPath();
+  ctx.rotate((Math.PI * 1 / 10));
+  for (var i = 5; i--;) {
+    ctx.lineTo(0, length);
+    ctx.translate(0, length);
+    ctx.rotate((Math.PI * 2 / 10));
+    ctx.lineTo(0, -length);
+    ctx.translate(0, -length);
+    ctx.rotate(-(Math.PI * 6 / 10));
+  }
+  ctx.lineTo(0, length);
+  ctx.closePath();
+  ctx.stroke();
+  ctx.restore();
+}
+
+function getRandomInt(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+var el = document.getElementById('c');
+var ctx = el.getContext('2d');
+
+ctx.lineJoin = ctx.lineCap = 'round';
+ctx.fillStyle = 'red';
+
+var isDrawing, points = [ ], radius = 15;
+
+el.onmousedown = function(e) {
+  isDrawing = true;
+  points.push({ x: e.clientX, y: e.clientY });
+};
+el.onmousemove = function(e) {
+  if (!isDrawing) return;
+  
+  points.push({ x: e.clientX, y: e.clientY });
+  
+  ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+  for (var i = 0; i < points.length; i++) {
+    drawStar(points[i].x, points[i].y);
+  }
+};
+el.onmouseup = function() {
+  isDrawing = false;
+  points.length = 0;
+};
 */
