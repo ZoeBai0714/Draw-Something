@@ -19,9 +19,10 @@ export default class DrawArea extends React.Component{
       customStroke: false,
       //maxWidth: 100,
       minWidth: 5,
-      none:true, //default style
-      shadow: false,
-      randomDots:false
+      mode:"",
+      //none:true, //default style
+      //shadow: false,
+      //randomDots:false
     }
 
     canvas = ()=> {
@@ -97,12 +98,12 @@ export default class DrawArea extends React.Component{
      //check brush style
       if(this.state.isDrawing == true){
       
-        if(this.state.none ==true && this.state.shadow == false && this.state.randomDots == false){
+        if(this.state.mode == ""/*none ==true && this.state.shadow == false && this.state.randomDots == false */){
           this.drawMain(e)
-        }else if(this.state.randomDots == false && this.state.none == false && this.state.shadow == true){
+        }else if(this.state.mode == "shadow"/*randomDots == false && this.state.none == false && this.state.shadow == true */){
           this.shadow(e)
           this.drawMain(e)
-        }else if(this.state.shadow == false  && this.state.none == false && this.state.randomDots == true){
+        }else if(this.state.mode == "random dots"/*shadow == false  && this.state.none == false && this.state.randomDots == true*/){
           ctx.beginPath();
           ctx.moveTo(this.state.lastX, this.state.lastY);
           //ctx.lineTo(e.nativeEvent.offsetX, e.nativeEvent.offsetY); //must remove this line style to enable dots
@@ -137,28 +138,31 @@ export default class DrawArea extends React.Component{
       let value = e.target.value
 
       this.setState({
-        [name]:value 
+        mode:value 
       })
 
       this.ctx().lineWidth = this.state.minWidth
 
       if(value == "shadow"){
         this.setState({
-          none:false,
-          shadow: true,
-          randomDots:false
+          mode: "shadow",
+          // none:false,
+          // shadow: true,
+          // randomDots:false
         })
       }else if(value == "random dots"){
         this.setState({
-          none:false,
-          randomDots:true,
-          shadow: false
+          mode:"random dots",
+          // none:false,
+          // randomDots:true,
+          // shadow: false
         })
       }else if(value == "none"){
         this.setState({
-          none:true,
-          randomDots:false,
-          shadow: false
+          mode:"",
+          // none:true,
+          // randomDots:false,
+          // shadow: false
         })
       }
 
@@ -211,7 +215,7 @@ export default class DrawArea extends React.Component{
 
 
   render(){
-    console.log(this.state)
+    //console.log(this.state)
       return(
           <div /*style = {{height:'100%',width:'70%'}} */ /* right:'0px', position: 'absolute'}} */>
             <canvas onMouseMove = {this.draw} 
@@ -226,6 +230,7 @@ export default class DrawArea extends React.Component{
                    customColor={this.state.customColor}
                    ctx = {this.ctx}
                    canvas = {this.canvas}
+                   mode = {this.state.mode}
             />
          </div>
         

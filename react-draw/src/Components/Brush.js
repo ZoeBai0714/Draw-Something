@@ -46,7 +46,7 @@ const Brush  = (props) =>{
                  onChange={(e) => props.handleChange(e)}/>
               </label>
 
-              <select onChange={(e) => props.handleChange(e)}>
+              <select value={props.mode} onChange={(e) => props.handleChange(e)}>
                  <option value = "none">Choose Your Style</option>
                  <option value = "shadow">Shadow</option>
                  <option value = "random dots">Random Dots</option>
@@ -54,7 +54,7 @@ const Brush  = (props) =>{
         </div>
       )
     }
-   
+      console.log(props.mode)
     //this would't allow me to update the drop down menu
     
 
