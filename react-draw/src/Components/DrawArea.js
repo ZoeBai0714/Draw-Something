@@ -38,7 +38,7 @@ export default class DrawArea extends React.Component{
     const dataUrl = canvas.toDataURL()
     return dataUrl
   }
-  */
+  
 
   changeStateURL = () => {
     const canvas = this.canvas()
@@ -48,6 +48,7 @@ export default class DrawArea extends React.Component{
       canvasURL: canvas.toDataURL()
     })
   }
+  */
 
     componentDidMount = () =>{
       const canvas = this.canvas()
@@ -92,7 +93,7 @@ export default class DrawArea extends React.Component{
       const ctx = this.ctx();
       let hue = this.state.hue;
       this.ctx().lineWidth = this.state.minWidth // MUST be here, so everytime before the first stroke, it will check the new width first
-
+      const canvas = this.canvas()
      //check brush style
       if(this.state.isDrawing == true){
       
@@ -111,13 +112,12 @@ export default class DrawArea extends React.Component{
         } 
       
       }
-
     
-
       this.setState({   
          hue: hue,
          lastX: e.nativeEvent.offsetX,
-         lastY: e.nativeEvent.offsetY
+         lastY: e.nativeEvent.offsetY,
+         canvasURL: canvas.toDataURL()
       })
     }
   
