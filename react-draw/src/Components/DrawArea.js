@@ -82,6 +82,7 @@ export default class DrawArea extends React.Component{
 
     drawMain = (e) =>{
       const ctx = this.ctx();
+      ctx.globalAlpha = 1
       ctx.beginPath();
       ctx.moveTo(this.state.lastX, this.state.lastY);
       ctx.lineTo(e.nativeEvent.offsetX, e.nativeEvent.offsetY); //create a line betwwen coordinates
@@ -100,6 +101,8 @@ export default class DrawArea extends React.Component{
       
         if(this.state.mode == ""){
           this.drawMain(e)
+          ctx.shadowColor = '';   //get rid of shadow style if any
+          ctx.shadowBlur = 0;
         }else if(this.state.mode == "shadow"){
           this.shadow(e)
           this.drawMain(e)
