@@ -9,6 +9,7 @@ export default class DrawArea extends React.Component{
       isDrawing: false,
       lastX: 0,
       lastY: 0,
+      canvasURL: "test ",
       hue: 1,
       direction: true,
       controlDisplay: "none",
@@ -31,6 +32,22 @@ export default class DrawArea extends React.Component{
       return this.canvas().getContext("2d");
     }
 
+  /*
+  getDataURL = () => {
+    const canvas = this.canvas()
+    const dataUrl = canvas.toDataURL()
+    return dataUrl
+  }
+  */
+
+  changeStateURL = () => {
+    const canvas = this.canvas()
+    console.log(this.state.canvasURL)
+    console.log(canvas.toDataURL())
+    this.setState({
+      canvasURL: canvas.toDataURL()
+    })
+  }
 
     componentDidMount = () =>{
       const canvas = this.canvas()
@@ -194,8 +211,7 @@ export default class DrawArea extends React.Component{
 
 
   render(){
-    console.log(this.state.randomDots)
-    console.log(this.state.shadow)
+    console.log(this.state)
       return(
           <div /*style = {{height:'100%',width:'70%'}} */ /* right:'0px', position: 'absolute'}} */>
             <canvas onMouseMove = {this.draw} 

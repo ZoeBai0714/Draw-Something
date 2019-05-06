@@ -12,8 +12,9 @@ const io = socketIO(server); // create socket using server ^
 
 io.on("connection", socket => {
 
-    console.log('connected')
+    console.log('User Connected')
     socket.on('welcome.index', (userLogin, respond) => {
+        console.log(`New user created:`)
         console.log(userLogin)
         Player.create({name: userLogin.state.username, description: userLogin.state.description})
             .then( user => {
@@ -28,6 +29,8 @@ io.on("connection", socket => {
         console.log(players)
         respond(players)
     })
+
+    //socket.on('canvas.update', 
 
     //socket.on('disconnect', () => console.log("Client disconnected"))
 });

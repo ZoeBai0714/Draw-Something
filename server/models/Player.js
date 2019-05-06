@@ -17,6 +17,9 @@ const Player = sequelize.define('player', {
     },
     description:{
         type: STRING
+    },
+    canvasData: {
+        type: STRING
     }
 });
 
