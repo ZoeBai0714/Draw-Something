@@ -146,7 +146,8 @@ export default class DrawArea extends React.Component{
       let value = e.target.value
 
       this.setState({
-        mode:value 
+        //mode:value 
+        [name]:value
       })
 
       this.ctx().lineWidth = this.state.minWidth
@@ -213,7 +214,7 @@ export default class DrawArea extends React.Component{
       ctx.fill()
   } 
    }
-
+/*
   stars = (e) =>{
     const ctx = this.ctx()
     //const canvas = this.canvas()
@@ -261,10 +262,10 @@ export default class DrawArea extends React.Component{
      // points.push({ x: e.clientX, y: e.clientY });
       
      // ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
-      for (var i = 0; i < points.length; i++){
-        drawStar(points[i].x, points[i].y);
-      }
-    } 
+    // for (var i = 0; i < points.length; i++){
+    //    drawStar(points[i].x, points[i].y);
+     // }
+    //} 
      // }
     //};
     /*
@@ -276,9 +277,8 @@ export default class DrawArea extends React.Component{
   
 
   render(){
-    //console.log(this.state)
-      return(
-          
+    console.log(this.state.minWidth)
+      return(  
           <div >
             <canvas 
                     onMouseMove = {this.draw} 
