@@ -2,12 +2,10 @@ import React from 'react';
 
 const Brush  = (props) =>{
    const container = {
-        position: "absolute",
-        left: "1%",
-        top: "82%",
+        
         backgroundColor: "transparent",
-        width: "400px",
-        height: "150px",
+        width: "0px",
+        height: "0px",
         borderRadius: "15px"
    }
 
@@ -80,9 +78,13 @@ const Brush  = (props) =>{
      // for clear canvas, need to test on whether or not clear just current user all everyone's drawing
         return(
         <div style={container}>
-           <div style={content}>
-           <BrushWidth minWidth={props.minWidth} handleChange={props.handleInputChange} checked = {props.checked} mode={props.mode}/>
-           <ClearCanvas ctx={props.ctx} canvas={props.canvas}/>
+           <div  style={content}>
+            
+              <BrushWidth minWidth={props.minWidth} handleChange={props.handleInputChange} checked = {props.checked} mode={props.mode}/>
+           
+           
+              <ClearCanvas ctx={props.ctx} canvas={props.canvas}/>
+            
           </div>
         </div>
         )

@@ -22,7 +22,7 @@ export default class DrawerScreen extends React.Component {
       console.log(this.state.currentColor)
         return (
           <div>
-              <div className = "ui grid">
+              <div className = "ui grid" style = {{"margin-top": "0rem", "margin-left": "0.5rem"}}>
                 <div className="twelve wide column">
                     <DrawArea fullscreen={true}  currentColor = {this.state.currentColor} handleChange = {this.handleChange}/>
                 </div>
