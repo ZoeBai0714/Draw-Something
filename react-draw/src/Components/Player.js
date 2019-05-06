@@ -27,7 +27,7 @@ export default class Player extends Component {
 
     render() {
         return (
-            <div className="Person">
+            <div className="Person" style = {{"margin": "0.5rem"}}>
                 <form onSubmit = {e=>{this.handleSubmit(e)}}>
                 <div>
                     <label>

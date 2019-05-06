@@ -1,6 +1,8 @@
 import React from 'react';
 import '../DrawArea.css'
 import Brush from './Brush';
+import ColorPicker from '../Components/ColorPicker';
+
 
     
 
@@ -285,14 +287,23 @@ export default class DrawArea extends React.Component{
                     onMouseOut = {() => this.setState({isDrawing: false})}  
                     id="drawing">
             </canvas>
-            <Brush handleInputChange = {this.handleInputChange}
-                   minWidth={this.state.minWidth}
-                   select = {this.select}
-                   customColor={this.state.customColor}
-                   ctx = {this.ctx}
-                   canvas = {this.canvas}
-                   mode = {this.state.mode}
-            />
+            <div className = "ui grid" style = {{"margin-top": "1rem"}}>
+            {/* <div className = "row" style = {{"margin-top": "1rem"}}> */}
+              <div className="five wide column">
+                <Brush handleInputChange = {this.handleInputChange}
+                      minWidth={this.state.minWidth}
+                      select = {this.select}
+                      customColor={this.state.customColor}
+                      ctx = {this.ctx}
+                      canvas = {this.canvas}
+                      mode = {this.state.mode}
+                />
+              </div>
+              <div className="three wide column" style = {{"margin-left": "1rem"}}>
+                <ColorPicker currentColor = {this.state.currentColor} handleChange = {this.props.handleChange} />
+              </div>
+            {/* </div> */}
+            </div>
          </div>
          
       )
