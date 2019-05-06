@@ -1,6 +1,9 @@
 #drawing {
     border: solid;
     border-radius: 25px;
+    margin-left: 290px;
+    margin-top: 20px;
+    box-shadow: 5px 10px #a5a9af;
 }
 
 /*
