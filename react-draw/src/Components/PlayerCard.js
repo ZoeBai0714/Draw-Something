@@ -7,7 +7,8 @@ export default class PlayerCard extends React.Component {
     render() {
         
         return (
-            <div style={{float: "right", top: 100}}className="ui column">
+            
+            <div style={{float: "right", top: 100}} className="ui column">
                 <div className="ui card">
                     <div className="image">
                         <img src={this.props.player.avatar} alt=""></img>

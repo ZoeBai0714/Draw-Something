@@ -10,13 +10,6 @@ export default class DrawerScreen extends React.Component {
         currentColor: ''
       }     
 
-      draw = () =>{
-        console.log('mouse down')
-      }
-  
-      stopDraw = () =>{
-        console.log('mouse up')
-      }
 
       handleChange = (color) =>{
         console.log(color)
@@ -29,7 +22,7 @@ export default class DrawerScreen extends React.Component {
       console.log(this.state.currentColor)
         return (
             <div>
-                <DrawArea fullscreen={true} width="500" height="500" currentColor = {this.state.currentColor} />
+                <DrawArea fullscreen={true}  currentColor = {this.state.currentColor} />
                 <ColorPicker currentColor = {this.state.currentColor} handleChange = {this.handleChange}/>
                 <PlayerSection />
             </div>
