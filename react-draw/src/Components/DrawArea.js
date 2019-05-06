@@ -225,15 +225,21 @@ export default class DrawArea extends React.Component{
                     onMouseOut = {() => this.setState({isDrawing: false})}  
                     id="drawing">
             </canvas>
-            <Brush handleInputChange = {this.handleInputChange}
-                   minWidth={this.state.minWidth}
-                   select = {this.select}
-                   customColor={this.state.customColor}
-                   ctx = {this.ctx}
-                   canvas = {this.canvas}
-                   mode = {this.state.mode}
-            />
-            <ColorPicker currentColor = {this.state.currentColor} handleChange = {this.props.handleChange} />
+            <div className = "ui grid" >
+              <div className="eight wide column">
+                <Brush handleInputChange = {this.handleInputChange}
+                      minWidth={this.state.minWidth}
+                      select = {this.select}
+                      customColor={this.state.customColor}
+                      ctx = {this.ctx}
+                      canvas = {this.canvas}
+                      mode = {this.state.mode}
+                />
+              </div>
+              <div className="three wide column">
+                <ColorPicker currentColor = {this.state.currentColor} handleChange = {this.props.handleChange} />
+              </div>
+            </div>
          </div>
          
       )
