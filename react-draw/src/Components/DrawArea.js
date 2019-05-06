@@ -115,7 +115,7 @@ export default class DrawArea extends React.Component{
           ctx.strokeStyle = this.props.currentColor || 'red'//`hsl(${this.state.hue}, 100%, 50%)`
           this.randomDots(e)
         }else if(this.state.mode == "stars"){
-          this.stars(e) 
+          //this.stars(e) 
         } 
       
       }
@@ -188,10 +188,7 @@ export default class DrawArea extends React.Component{
   
 
   randomDots = (e) =>{
-     const ctx = this.ctx()
-    // ctx.shadowColor = '';  //get rid of the styles in shadow if any
-    // ctx.shadowBlur = 0;
-
+    const ctx = this.ctx()
     let getRandomInt = (max, min) => Math.floor(Math.random() * (max - min + 1)) + min;  //max min
     ctx.lineJoin = ctx.lineCap = 'round';
     ctx.fillStyle = this.props.currentColor ||'red'//`${this.props.currentColor}`
@@ -216,10 +213,65 @@ export default class DrawArea extends React.Component{
    }
 
   stars = (e) =>{
-    let getRandomInt = (max, min) => Math.floor(Math.random() * (max - min + 1)) + min;  //max min
     const ctx = this.ctx()
+    //const canvas = this.canvas()
+    const drawStar = (x, y) => {
+      var length = 15;
+      ctx.save();
+      ctx.translate(x, y);
+      ctx.beginPath();
+      ctx.rotate((Math.PI * 1 / 10));
+      for (var i = 5; i--;) {
+        ctx.lineTo(e.nativeEvent.offsetX, e.nativeEvent.offsetY);
+        ctx.translate(0, length);
+        ctx.rotate((Math.PI * 2 / 10));
+        ctx.lineTo(e.nativeEvent.offsetX, e.nativeEvent.offsetY);
+        ctx.translate(0, -length);
+        ctx.rotate(-(Math.PI * 6 / 10));
+      }
+      ctx.lineTo(e.nativeEvent.offsetX, e.nativeEvent.offsetY);
+      ctx.closePath();
+      ctx.stroke();
+      //ctx.restore();
+    }
+   let getRandomInt= (min, max) => {
+      return Math.floor(Math.random() * (max - min + 1)) + min;  // don't need this?
+   }
 
-  }
+   ctx.lineJoin = ctx.lineCap = 'round';
+   ctx.fillStyle = 'red'; // need to change the color
+   let points = [ ], radius = 15;
+    
+   points.push({ 
+    x: e.nativeEvent.offsetX, 
+    y: e.nativeEvent.offsetY,
+    radius: getRandomInt(5, 20)
+  });
+
+   /*
+    canvas.onmousedown = (e) => {
+      points.push({ x: e.clientX, y: e.clientY });
+    };
+   */
+    //canvas.onmousemove = (e)=> {
+      //if (!this.state.isDrawing) return;
+      
+     // points.push({ x: e.clientX, y: e.clientY });
+      
+     // ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+      for (var i = 0; i < points.length; i++){
+        drawStar(points[i].x, points[i].y);
+      }
+    } 
+     // }
+    //};
+    /*
+    canvas.onmouseup = () => {
+      this.setState({isDrawing:false})
+      points.length = 0;
+    };
+    */
+  
 
   render(){
     //console.log(this.state)
