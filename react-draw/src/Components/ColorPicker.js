@@ -22,9 +22,7 @@ export default class ColorPicker extends React.Component {
     render() {
         // console.log(this.state.currentColor)
         return (
-            <div className = "ui grid">
-                <div className = "column"><SketchPicker color = {this.state.currentColor} onChangeComplete = {this.handleChange}/></div>
-            </div>
+            <SketchPicker color = {this.state.currentColor} onChangeComplete = {this.handleChange}/>
         )
     }
 }

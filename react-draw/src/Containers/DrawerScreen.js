@@ -23,16 +23,16 @@ export default class DrawerScreen extends React.Component {
       console.log(this.state.currentColor)
         return (
           <div>
-           
+              <div className = "ui grid">
+                <div className="twelve wide column">
                     <DrawArea fullscreen={true}  currentColor = {this.state.currentColor} />
-                  
-                
-                <PlayerSection />
-           
-                
-                  <ColorPicker currentColor = {this.state.currentColor} handleChange = {this.handleChange}/>
-                
+                    <ColorPicker currentColor = {this.state.currentColor} handleChange = {this.handleChange}/>
+                </div>
+                <div className="three wide column">
+                  <PlayerSection />
+                </div>
             </div>
+          </div>
         )
     }
 }
