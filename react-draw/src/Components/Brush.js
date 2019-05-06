@@ -3,8 +3,8 @@ import React from 'react';
 const Brush  = (props) =>{
    const container = {
         position: "absolute",
-        right: "100px",
-        top: "500px",
+        left: "1%",
+        top: "82%",
         backgroundColor: "transparent",
         width: "400px",
         height: "150px",

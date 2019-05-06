@@ -1,5 +1,8 @@
 import React from 'react'
 import {SketchPicker} from 'react-color'
+import '../DrawerScreen.css'
+
+
 
 export default class ColorPicker extends React.Component {
  
@@ -19,7 +22,9 @@ export default class ColorPicker extends React.Component {
     render() {
         // console.log(this.state.currentColor)
         return (
-            <SketchPicker color = {this.state.currentColor} onChangeComplete = {this.handleChange}/>
+            <div className = "ui grid">
+                <div className = "column"><SketchPicker color = {this.state.currentColor} onChangeComplete = {this.handleChange}/></div>
+            </div>
         )
     }
 }
