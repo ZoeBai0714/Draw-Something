@@ -1,6 +1,8 @@
 import React from 'react';
 import '../DrawArea.css'
 import Brush from './Brush';
+import ColorPicker from '../Components/ColorPicker';
+
 
     
 
@@ -231,6 +233,7 @@ export default class DrawArea extends React.Component{
                    canvas = {this.canvas}
                    mode = {this.state.mode}
             />
+            <ColorPicker currentColor = {this.state.currentColor} handleChange = {this.props.handleChange} />
          </div>
          
       )
