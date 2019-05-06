@@ -31,11 +31,11 @@ export default class Player extends Component {
                 <form onSubmit = {e=>{this.handleSubmit(e)}}>
                 <div>
                     <label>
-                        Username
+                        Username:
                         <input  id="username" name="username" type="text" />
                     </label>
                     <label>
-                        description
+                        Bio:
                         <input id="description" name="description" type="text"/>
                     </label>
                     <button type="submit">Log in</button>
