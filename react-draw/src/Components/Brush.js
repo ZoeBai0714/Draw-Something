@@ -37,6 +37,7 @@ const Brush  = (props) =>{
       const inputStyle = {
         display: "block"
       }
+      console.log(props.mode) // has to set a value property in the selection bar and get the value from parent state
       return (
         <div style={strokeControlStyle} >
               <label>
@@ -45,16 +46,16 @@ const Brush  = (props) =>{
                  value={props.minWidth} min="5" max="100"
                  onChange={(e) => props.handleChange(e)}/>
               </label>
-
-              <select onChange={(e) => props.handleChange(e)}>
+               <div>
+              <select value={props.mode} onChange={(e) => props.handleChange(e)}> 
                  <option value = "none">Choose Your Style</option>
                  <option value = "shadow">Shadow</option>
                  <option value = "random dots">Random Dots</option>
               </select>
+              </div>
         </div>
       )
     }
-   
     //this would't allow me to update the drop down menu
     
 
@@ -80,7 +81,7 @@ const Brush  = (props) =>{
         return(
         <div style={container}>
            <div style={content}>
-           <BrushWidth minWidth={props.minWidth} handleChange={props.handleInputChange} checked = {props.checked}/>
+           <BrushWidth minWidth={props.minWidth} handleChange={props.handleInputChange} checked = {props.checked} mode={props.mode}/>
            <ClearCanvas ctx={props.ctx} canvas={props.canvas}/>
           </div>
         </div>
