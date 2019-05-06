@@ -38,21 +38,14 @@ export default class DrawArea extends React.Component{
   }
   */
 
-  changeStateURL = () => {
-    const canvas = this.canvas()
-    console.log(this.state.canvasURL)
-    console.log(canvas.toDataURL())
-    this.setState({
-      canvasURL: canvas.toDataURL()
-    })
-  }
-
  componentDidMount = () =>{
-  const canvas = this.canvas()
-  this.changeStateURL()
-  console.log(canvas.toDataURL())
+  const canvas = this.canvas()     // testing canvas state
+  console.log(canvas.toDataURL()) 
   const ctx = this.ctx()
   console.log(ctx)
+
+//--------------------
+
   //set the window size for different clients' browser, make sure it is consistent
   if(this.props.fullscreen === true){
    canvas.width = window.innerWidth;
@@ -102,11 +95,16 @@ export default class DrawArea extends React.Component{
       // if(hue >= 360) {   //limit the color in a range
       //   hue = 1
       // }
+      const canvas = this.canvas()
       this.setState({   //after starting cursor continue change x and y coordinates 
         // hue: hue,
         lastX: e.nativeEvent.offsetX,
-        lastY: e.nativeEvent.offsetY
+        lastY: e.nativeEvent.offsetY,
+        canvasURL: canvas.toDataURL()
       })
+
+      //show state after canvas change
+      console.log(this.state)
 
       
    }
