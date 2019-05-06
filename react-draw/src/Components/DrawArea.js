@@ -98,12 +98,12 @@ export default class DrawArea extends React.Component{
      //check brush style
       if(this.state.isDrawing == true){
       
-        if(this.state.mode == ""/*none ==true && this.state.shadow == false && this.state.randomDots == false */){
+        if(this.state.mode == ""){
           this.drawMain(e)
-        }else if(this.state.mode == "shadow"/*randomDots == false && this.state.none == false && this.state.shadow == true */){
+        }else if(this.state.mode == "shadow"){
           this.shadow(e)
           this.drawMain(e)
-        }else if(this.state.mode == "random dots"/*shadow == false  && this.state.none == false && this.state.randomDots == true*/){
+        }else if(this.state.mode == "random dots"){
           ctx.beginPath();
           ctx.moveTo(this.state.lastX, this.state.lastY);
           //ctx.lineTo(e.nativeEvent.offsetX, e.nativeEvent.offsetY); //must remove this line style to enable dots
@@ -145,24 +145,15 @@ export default class DrawArea extends React.Component{
 
       if(value == "shadow"){
         this.setState({
-          mode: "shadow",
-          // none:false,
-          // shadow: true,
-          // randomDots:false
+          mode: "shadow"
         })
       }else if(value == "random dots"){
         this.setState({
-          mode:"random dots",
-          // none:false,
-          // randomDots:true,
-          // shadow: false
+          mode: "random dots"
         })
       }else if(value == "none"){
         this.setState({
-          mode:"",
-          // none:true,
-          // randomDots:false,
-          // shadow: false
+          mode: ""
         })
       }
 
@@ -178,17 +169,18 @@ export default class DrawArea extends React.Component{
 
   shadow = (e) =>{
     const ctx = this.ctx()
+    ctx.globalAlpha = 1;
     ctx.shadowColor = this.props.currentColor ||'red'
-    ctx.shadowBlur = 20;
+    ctx.shadowBlur = 30;
     ctx.fillStyle = this.props.currentColor ||'red'
        
   } 
   
 
   randomDots = (e) =>{
-    const ctx = this.ctx()
-    ctx.shadowColor = '';  //get rid of the styles in shadow if any
-    ctx.shadowBlur = 0;
+     const ctx = this.ctx()
+    // ctx.shadowColor = '';  //get rid of the styles in shadow if any
+    // ctx.shadowBlur = 0;
 
     let getRandomInt = (max, min) => Math.floor(Math.random() * (max - min + 1)) + min;  //max min
     ctx.lineJoin = ctx.lineCap = 'round';
@@ -205,6 +197,7 @@ export default class DrawArea extends React.Component{
     for (var i = 0; i < points.length; i++) {
       ctx.beginPath();
       ctx.globalAlpha = points[i].opacity;
+      console.log(points[i].opacity)
       ctx.arc(
       points[i].x, points[i].y, points[i].radius, 
       false, Math.PI * 2, false);
