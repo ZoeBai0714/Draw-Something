@@ -1,6 +1,7 @@
 import React from 'react';
 import '../DrawArea.css'
 import Brush from './Brush';
+
     
 
 export default class DrawArea extends React.Component{
@@ -56,8 +57,8 @@ export default class DrawArea extends React.Component{
       const ctx = this.ctx()
       //set the canvas size here, we compare it to the screen size so it will not affect offset X and Y when we draw
       if(this.props.fullscreen === true){
-        canvas.width = window.innerWidth * 0.67; 
-        canvas.height = window.innerHeight * 0.7;
+        canvas.width = window.innerWidth * 0.70; 
+        canvas.height = window.innerHeight * 0.75;
     }
     //set the draw stroke 
       ctx.strokeStyle = "#BADA55";
@@ -213,8 +214,10 @@ export default class DrawArea extends React.Component{
   render(){
     //console.log(this.state)
       return(
-          <div /*style = {{height:'100%',width:'70%'}} */ /* right:'0px', position: 'absolute'}} */>
-            <canvas onMouseMove = {this.draw} 
+          
+          <div >
+            <canvas 
+                    onMouseMove = {this.draw} 
                     onMouseDown = {(e)=> this.getMousePosition(e)} 
                     onMouseUp = {() => this.setState({isDrawing: false})}
                     onMouseOut = {() => this.setState({isDrawing: false})}  
@@ -229,7 +232,7 @@ export default class DrawArea extends React.Component{
                    mode = {this.state.mode}
             />
          </div>
-        
+         
       )
   }
 }

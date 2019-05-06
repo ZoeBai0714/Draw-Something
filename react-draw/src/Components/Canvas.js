@@ -1,11 +1,13 @@
-import React, { Component } from 'react';
+// import React, { Component } from 'react';
 
-class Canvas extends Component {
-   render() {
-       return (
-           <canvas style = {{border: 'solid'}} display = 'block' ref="canvas" width={1000} height={600}/>
-       )
-   }
-}
+// class Canvas extends Component {
+//    render() {
+//        return (
+           
+//             <canvas style = {{border: 'solid'}} display = 'block' ref="canvas" />
+           
+//        )
+//    }
+// }
 
-export default Canvas
+// export default Canvas

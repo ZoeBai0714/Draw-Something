@@ -8,19 +8,19 @@ export default class PlayerCard extends React.Component {
         
         return (
             
-            <div style={{float: "right", top: 100}} className="ui column">
-                <div className="ui card">
+            
+                <div className="ui raised link card">
                     <div className="image">
                         <img src={this.props.player.avatar} alt=""></img>
                     </div>
                     <div className="content">
                         <h3>{this.props.player.name}</h3>
                         <div className="meta text-wrap">
-                            <p>Description: {this.props.player.description}</p>
+                            <p>Bio: {this.props.player.description}</p>
                         </div>
                     </div>
                 </div>
-            </div>
+           
         )
     }
 }    
