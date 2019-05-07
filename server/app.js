@@ -9,29 +9,52 @@ app.use(cors());
 const server = http.createServer(app); // initialize server
 const io = socketIO(server); // create socket using server ^
 
+const loggedInUsers = {}
 
 io.on("connection", socket => {
 
     console.log('User Connected')
     socket.on('welcome.index', (userLogin, respond) => {
         console.log(`New user created:`)
-        console.log(userLogin)
+        //console.log(userLogin)
         Player.create({name: userLogin.state.username, description: userLogin.state.description})
             .then( user => {
                 io.emit('users.new',user)
                 respond(userLogin)
+                //console.log(socket.id)
+                //console.log(user.id)
+                loggedInUsers.socketId = user.id
+                //console.log(loggedInUsers)
+                //console.log(loggedInUsers.socketId)
+                //console.log(loggedInUsers[socket.id])
+                //console.log(user.id)
             })
     })
 
     socket.on('users.index', async (users, respond) => {
-        console.log(users)
+        //console.log(users)
         let players = await Player.findAll()
-        console.log(players)
+        //console.log(players)
         respond(players)
     })
 
-    //socket.on('canvas.update', 
-
+    
+    socket.on('canvas.update',(stateURL) => {
+        //console.log(socket.id)
+        //console.log(stateURL)
+        //console.log(loggedInUsers.socketId)
+        const pl = Player.findByPk(loggedInUsers.socketId)
+            .then((playerData) => {
+                //console.log(pl)
+                //console.log('Player Data:')
+                //console.log(playerData)
+                playerData.update({
+                   canvasData: stateURL
+                })
+            })
+            io.emit('canvas.draw', stateURL)
+            console.log('emit canvas')
+    })
     //socket.on('disconnect', () => console.log("Client disconnected"))
 });
 

@@ -2,9 +2,12 @@ import React from 'react';
 import '../DrawArea.css'
 import Brush from './Brush';
 import ColorPicker from '../Components/ColorPicker';
-
-
     
+import socketIO from 'socket.io-client'
+
+const io = socketIO('http://localhost:3000/')
+window.io = io
+
 
 export default class DrawArea extends React.Component{
   
@@ -12,7 +15,7 @@ export default class DrawArea extends React.Component{
       isDrawing: false,
       lastX: 0,
       lastY: 0,
-      canvasURL: "test ",
+      canvasURL: null,
       hue: 1,
       direction: true,
       controlDisplay: "none",
@@ -121,12 +124,23 @@ export default class DrawArea extends React.Component{
         } 
       
       }
-    
+
+      // testing state buffer
+      const canvasDraw = document.querySelector("#drawing")
+      //const objectURL = URL.createObjectURL(canvasDraw.toBlob())
+      //console.log(objectURL)
+      var image = new Image()
+      let url = canvasDraw.toDataURL()
+      console.log(image.src)
+      const data = image.src
+      image.src = url
+// console.log(url)
+      // set canvasURL state 
       this.setState({   
          hue: hue,
          lastX: e.nativeEvent.offsetX,
          lastY: e.nativeEvent.offsetY,
-         canvasURL: canvas.toDataURL()
+         canvasURL: url
       })
     }
   
