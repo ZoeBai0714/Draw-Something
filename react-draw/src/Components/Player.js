@@ -32,7 +32,7 @@ export default class Player extends Component {
                 <div>
                     <label>
                         Username:
-                        <input  id="username" name="username" type="text" />
+                        <input  id="username" name="username" type="text" style = {{ "margin-right": "1rem"}}/>
                     </label>
                     <label>
                         Bio:
