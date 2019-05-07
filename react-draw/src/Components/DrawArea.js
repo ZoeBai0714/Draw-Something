@@ -5,7 +5,7 @@ import ColorPicker from '../Components/ColorPicker';
     
 import socketIO from 'socket.io-client'
 
-const io = socketIO('http://localhost:3000/')
+const io = socketIO('10.185.1.60:3000/')
 window.io = io
 
 
@@ -58,6 +58,7 @@ export default class DrawArea extends React.Component{
   */
 
     componentDidMount = () =>{
+      //this.drawCanvas();
       const canvas = this.canvas()
       const ctx = this.ctx()
       //set the canvas size here, we compare it to the screen size so it will not affect offset X and Y when we draw
@@ -70,6 +71,7 @@ export default class DrawArea extends React.Component{
       ctx.lineJoin = "round";
       ctx.lineCap = "round";
       ctx.lineWidth = this.state.minWidth//Number(this.state.minWidth)
+      this.drawCanvas();
     } 
 
   //convert DOM pixel into canvas pixel, that's why the offset position is not right
@@ -131,7 +133,7 @@ export default class DrawArea extends React.Component{
       //console.log(objectURL)
       var image = new Image()
       let url = canvasDraw.toDataURL()
-      console.log(image.src)
+      //console.log(image.src)
       const data = image.src
       image.src = url
       // console.log(url)
@@ -143,19 +145,28 @@ export default class DrawArea extends React.Component{
          canvasURL: url
       })
   
-      io.emit('canvas.update', this.state.canvasURL)
-
+      //io.emit('canvas.update', this.state.canvasURL)
     }
   
     // work on realtime canvas
     
-    drawCanvas() {
+    drawCanvas=()=> { 
+      //io.emit('canvas.update', this.state.canvasURL)
       io.on('canvas.draw', url => {
-        const canvas = this.canvas()
-        const ctx = this.ctx()
+        //const canvas = this.canvas()
+       
         var image = new Image()
         image.src = url
-        ctx.drawImage(image, 0, 0)
+        //console.log(url)
+        //console.log(image)
+        image.onload = () =>{
+          this.clearStyle()
+          const ctx = this.ctx()
+
+          ctx.clearRect(0, 0, this.canvas().width, this.canvas().height)
+          ctx.drawImage(image, 0, 0)
+        }
+        console.log('CANVAS RECEIVED')
       })
     }
     //*/
@@ -171,9 +182,6 @@ export default class DrawArea extends React.Component{
                                         
     */
   
-  
-
-
 
   //functions for Brush
   handleInputChange = (e) =>{
@@ -210,6 +218,7 @@ export default class DrawArea extends React.Component{
   // call this function first everytime a new brush style is triggered
   clearStyle = (e) =>{
     const ctx = this.ctx();
+    ctx.globalAlpha = 1;
     ctx.shadowColor = '';   //get rid of shadow style if any
     ctx.shadowBlur = 0;
     ctx.fillStyle = this.props.currentColor ||'red'
@@ -312,12 +321,12 @@ export default class DrawArea extends React.Component{
     */
   
   handleMouseUp = () => {
-    this.drawCanvas()
+    io.emit('canvas.update', this.state.canvasURL)
     this.setState({isDrawing: false})
   } 
 
   render(){
-    console.log(this.state.minWidth)
+    //console.log(this.state.minWidth)
        //test realtime canvas
       return(  
           <div >

@@ -35,7 +35,7 @@ const Brush  = (props) =>{
       const inputStyle = {
         display: "block"
       }
-      console.log(props.mode) // has to set a value property in the selection bar and get the value from parent state
+      //console.log(props.mode) // has to set a value property in the selection bar and get the value from parent state
       return (
         <div style={strokeControlStyle} >
               <label>

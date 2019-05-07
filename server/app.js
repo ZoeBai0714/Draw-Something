@@ -13,7 +13,6 @@ const loggedInUsers = {}
 
 io.on("connection", socket => {
 
-    console.log('User Connected')
     socket.on('welcome.index', (userLogin, respond) => {
         console.log(`New user created:`)
         //console.log(userLogin)
