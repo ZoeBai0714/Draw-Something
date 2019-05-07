@@ -1,5 +1,8 @@
 import React from 'react'
 import {SketchPicker} from 'react-color'
+import '../DrawerScreen.css'
+
+
 
 export default class ColorPicker extends React.Component {
  

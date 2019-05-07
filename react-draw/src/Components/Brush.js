@@ -2,12 +2,10 @@ import React from 'react';
 
 const Brush  = (props) =>{
    const container = {
-        position: "absolute",
-        right: "100px",
-        top: "500px",
+        
         backgroundColor: "transparent",
-        width: "400px",
-        height: "150px",
+        width: "0px",
+        height: "0px",
         borderRadius: "15px"
    }
 
@@ -37,6 +35,7 @@ const Brush  = (props) =>{
       const inputStyle = {
         display: "block"
       }
+      console.log(props.mode) // has to set a value property in the selection bar and get the value from parent state
       return (
         <div style={strokeControlStyle} >
               <label>
@@ -45,16 +44,16 @@ const Brush  = (props) =>{
                  value={props.minWidth} min="5" max="100"
                  onChange={(e) => props.handleChange(e)}/>
               </label>
-
-              <select onChange={(e) => props.handleChange(e)}>
+               <div>
+              <select value={props.mode} onChange={(e) => props.handleChange(e)}> 
                  <option value = "none">Choose Your Style</option>
                  <option value = "shadow">Shadow</option>
                  <option value = "random dots">Random Dots</option>
               </select>
+              </div>
         </div>
       )
     }
-   
     //this would't allow me to update the drop down menu
     
 
@@ -79,9 +78,13 @@ const Brush  = (props) =>{
      // for clear canvas, need to test on whether or not clear just current user all everyone's drawing
         return(
         <div style={container}>
-           <div style={content}>
-           <BrushWidth minWidth={props.minWidth} handleChange={props.handleInputChange} checked = {props.checked}/>
-           <ClearCanvas ctx={props.ctx} canvas={props.canvas}/>
+           <div  style={content}>
+            
+              <BrushWidth minWidth={props.minWidth} handleChange={props.handleInputChange} checked = {props.checked} mode={props.mode}/>
+           
+           
+              <ClearCanvas ctx={props.ctx} canvas={props.canvas}/>
+            
           </div>
         </div>
         )

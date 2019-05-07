@@ -1,6 +1,9 @@
 import React from 'react';
 import '../DrawArea.css'
 import Brush from './Brush';
+import ColorPicker from '../Components/ColorPicker';
+
+
     
 
 export default class DrawArea extends React.Component{
@@ -19,9 +22,10 @@ export default class DrawArea extends React.Component{
       customStroke: false,
       //maxWidth: 100,
       minWidth: 5,
-      none:true, //default style
-      shadow: false,
-      randomDots:false
+      mode:"",
+      //none:true, //default style
+      //shadow: false,
+      //randomDots:false
     }
 
     canvas = ()=> {
@@ -55,8 +59,8 @@ export default class DrawArea extends React.Component{
       const ctx = this.ctx()
       //set the canvas size here, we compare it to the screen size so it will not affect offset X and Y when we draw
       if(this.props.fullscreen === true){
-        canvas.width = window.innerWidth * 0.67; 
-        canvas.height = window.innerHeight * 0.7;
+        canvas.width = window.innerWidth * 0.70; 
+        canvas.height = window.innerHeight * 0.75;
     }
     //set the draw stroke 
       ctx.strokeStyle = "#BADA55";
@@ -81,6 +85,7 @@ export default class DrawArea extends React.Component{
 
     drawMain = (e) =>{
       const ctx = this.ctx();
+      ctx.globalAlpha = 1
       ctx.beginPath();
       ctx.moveTo(this.state.lastX, this.state.lastY);
       ctx.lineTo(e.nativeEvent.offsetX, e.nativeEvent.offsetY); //create a line betwwen coordinates
@@ -97,18 +102,22 @@ export default class DrawArea extends React.Component{
      //check brush style
       if(this.state.isDrawing == true){
       
-        if(this.state.none ==true && this.state.shadow == false && this.state.randomDots == false){
+        if(this.state.mode == ""){
           this.drawMain(e)
-        }else if(this.state.randomDots == false && this.state.none == false && this.state.shadow == true){
+          ctx.shadowColor = '';   //get rid of shadow style if any
+          ctx.shadowBlur = 0;
+        }else if(this.state.mode == "shadow"){
           this.shadow(e)
           this.drawMain(e)
-        }else if(this.state.shadow == false  && this.state.none == false && this.state.randomDots == true){
+        }else if(this.state.mode == "random dots"){
           ctx.beginPath();
           ctx.moveTo(this.state.lastX, this.state.lastY);
           //ctx.lineTo(e.nativeEvent.offsetX, e.nativeEvent.offsetY); //must remove this line style to enable dots
           ctx.stroke();
           ctx.strokeStyle = this.props.currentColor || 'red'//`hsl(${this.state.hue}, 100%, 50%)`
           this.randomDots(e)
+        }else if(this.state.mode == "stars"){
+          //this.stars(e) 
         } 
       
       }
@@ -137,28 +146,27 @@ export default class DrawArea extends React.Component{
       let value = e.target.value
 
       this.setState({
-        [name]:value 
+        //mode:value 
+        [name]:value
       })
 
       this.ctx().lineWidth = this.state.minWidth
 
       if(value == "shadow"){
         this.setState({
-          none:false,
-          shadow: true,
-          randomDots:false
+          mode: "shadow"
         })
       }else if(value == "random dots"){
         this.setState({
-          none:false,
-          randomDots:true,
-          shadow: false
+          mode: "random dots"
         })
       }else if(value == "none"){
         this.setState({
-          none:true,
-          randomDots:false,
-          shadow: false
+          mode: ""
+        })
+      }else if(value == "stars"){
+        this.setState({
+          mode:"stars"
         })
       }
 
@@ -174,8 +182,9 @@ export default class DrawArea extends React.Component{
 
   shadow = (e) =>{
     const ctx = this.ctx()
+    ctx.globalAlpha = 1;
     ctx.shadowColor = this.props.currentColor ||'red'
-    ctx.shadowBlur = 20;
+    ctx.shadowBlur = 30;
     ctx.fillStyle = this.props.currentColor ||'red'
        
   } 
@@ -183,9 +192,6 @@ export default class DrawArea extends React.Component{
 
   randomDots = (e) =>{
     const ctx = this.ctx()
-    ctx.shadowColor = '';  //get rid of the styles in shadow if any
-    ctx.shadowBlur = 0;
-
     let getRandomInt = (max, min) => Math.floor(Math.random() * (max - min + 1)) + min;  //max min
     ctx.lineJoin = ctx.lineCap = 'round';
     ctx.fillStyle = this.props.currentColor ||'red'//`${this.props.currentColor}`
@@ -201,39 +207,158 @@ export default class DrawArea extends React.Component{
     for (var i = 0; i < points.length; i++) {
       ctx.beginPath();
       ctx.globalAlpha = points[i].opacity;
+      console.log(points[i].opacity)
       ctx.arc(
       points[i].x, points[i].y, points[i].radius, 
       false, Math.PI * 2, false);
       ctx.fill()
   } 
    }
+/*
+  stars = (e) =>{
+    const ctx = this.ctx()
+    //const canvas = this.canvas()
+    const drawStar = (x, y) => {
+      var length = 15;
+      ctx.save();
+      ctx.translate(x, y);
+      ctx.beginPath();
+      ctx.rotate((Math.PI * 1 / 10));
+      for (var i = 5; i--;) {
+        ctx.lineTo(e.nativeEvent.offsetX, e.nativeEvent.offsetY);
+        ctx.translate(0, length);
+        ctx.rotate((Math.PI * 2 / 10));
+        ctx.lineTo(e.nativeEvent.offsetX, e.nativeEvent.offsetY);
+        ctx.translate(0, -length);
+        ctx.rotate(-(Math.PI * 6 / 10));
+      }
+      ctx.lineTo(e.nativeEvent.offsetX, e.nativeEvent.offsetY);
+      ctx.closePath();
+      ctx.stroke();
+      //ctx.restore();
+    }
+   let getRandomInt= (min, max) => {
+      return Math.floor(Math.random() * (max - min + 1)) + min;  // don't need this?
+   }
 
+   ctx.lineJoin = ctx.lineCap = 'round';
+   ctx.fillStyle = 'red'; // need to change the color
+   let points = [ ], radius = 15;
+    
+   points.push({ 
+    x: e.nativeEvent.offsetX, 
+    y: e.nativeEvent.offsetY,
+    radius: getRandomInt(5, 20)
+  });
 
+   /*
+    canvas.onmousedown = (e) => {
+      points.push({ x: e.clientX, y: e.clientY });
+    };
+   */
+    //canvas.onmousemove = (e)=> {
+      //if (!this.state.isDrawing) return;
+      
+     // points.push({ x: e.clientX, y: e.clientY });
+      
+     // ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+    // for (var i = 0; i < points.length; i++){
+    //    drawStar(points[i].x, points[i].y);
+     // }
+    //} 
+     // }
+    //};
+    /*
+    canvas.onmouseup = () => {
+      this.setState({isDrawing:false})
+      points.length = 0;
+    };
+    */
+  
 
   render(){
-    console.log(this.state)
-      return(
-          <div /*style = {{height:'100%',width:'70%'}} */ /* right:'0px', position: 'absolute'}} */>
-            <canvas onMouseMove = {this.draw} 
+    console.log(this.state.minWidth)
+      return(  
+          <div >
+            <canvas 
+                    onMouseMove = {this.draw} 
                     onMouseDown = {(e)=> this.getMousePosition(e)} 
                     onMouseUp = {() => this.setState({isDrawing: false})}
                     onMouseOut = {() => this.setState({isDrawing: false})}  
                     id="drawing">
             </canvas>
-            <Brush handleInputChange = {this.handleInputChange}
-                   minWidth={this.state.minWidth}
-                   select = {this.select}
-                   customColor={this.state.customColor}
-                   ctx = {this.ctx}
-                   canvas = {this.canvas}
-            />
+            <div className = "ui grid" style = {{"margin-top": "1rem"}}>
+            {/* <div className = "row" style = {{"margin-top": "1rem"}}> */}
+              <div className="five wide column">
+                <Brush handleInputChange = {this.handleInputChange}
+                      minWidth={this.state.minWidth}
+                      select = {this.select}
+                      customColor={this.state.customColor}
+                      ctx = {this.ctx}
+                      canvas = {this.canvas}
+                      mode = {this.state.mode}
+                />
+              </div>
+              <div className="three wide column" style = {{"margin-left": "1rem"}}>
+                <ColorPicker currentColor = {this.state.currentColor} handleChange = {this.props.handleChange} />
+              </div>
+            {/* </div> */}
+            </div>
          </div>
-        
+         
       )
   }
 }
 
-/* problems need to fix:
- 1.select drop down menu value not updating
- 2.after randomDots, if we change it to shadow, the line opacity can't change back
+/* stars:
+ function drawStar(x, y) {
+  var length = 15;
+  ctx.save();
+  ctx.translate(x, y);
+  ctx.beginPath();
+  ctx.rotate((Math.PI * 1 / 10));
+  for (var i = 5; i--;) {
+    ctx.lineTo(0, length);
+    ctx.translate(0, length);
+    ctx.rotate((Math.PI * 2 / 10));
+    ctx.lineTo(0, -length);
+    ctx.translate(0, -length);
+    ctx.rotate(-(Math.PI * 6 / 10));
+  }
+  ctx.lineTo(0, length);
+  ctx.closePath();
+  ctx.stroke();
+  ctx.restore();
+}
+
+function getRandomInt(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+var el = document.getElementById('c');
+var ctx = el.getContext('2d');
+
+ctx.lineJoin = ctx.lineCap = 'round';
+ctx.fillStyle = 'red';
+
+var isDrawing, points = [ ], radius = 15;
+
+el.onmousedown = function(e) {
+  isDrawing = true;
+  points.push({ x: e.clientX, y: e.clientY });
+};
+el.onmousemove = function(e) {
+  if (!isDrawing) return;
+  
+  points.push({ x: e.clientX, y: e.clientY });
+  
+  ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+  for (var i = 0; i < points.length; i++) {
+    drawStar(points[i].x, points[i].y);
+  }
+};
+el.onmouseup = function() {
+  isDrawing = false;
+  points.length = 0;
+};
 */

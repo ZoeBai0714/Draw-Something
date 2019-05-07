@@ -1,7 +1,7 @@
 import React from 'react'
 import PlayerCard from './PlayerCard';
 import socketIO from 'socket.io-client'
-
+import "../PlayerSection.css"
 const io = socketIO('http://localhost:3000')
 window.io = io
 
@@ -33,7 +33,7 @@ export default class PlayerSection extends React.Component {
     render() {
         console.log(this.state.players)
         return (
-            <div>
+            <div id = "player-section">
                 {this.state.players.map(player => (<PlayerCard player = {player}/>))}            
             </div>
         )

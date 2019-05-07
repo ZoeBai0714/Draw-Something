@@ -1,8 +1,8 @@
 import React from 'react'
 import DrawArea from '../Components/DrawArea'
-import ColorPicker from '../Components/ColorPicker';
 import PlayerSection from '../Components/PlayerSection';
 import '../DrawArea.css'
+
 
 
 export default class DrawerScreen extends React.Component {
@@ -21,11 +21,16 @@ export default class DrawerScreen extends React.Component {
     render() {
       console.log(this.state.currentColor)
         return (
-            <div>
-                <DrawArea fullscreen={true}  currentColor = {this.state.currentColor} />
-                <ColorPicker currentColor = {this.state.currentColor} handleChange = {this.handleChange}/>
-                <PlayerSection />
+          <div>
+              <div className = "ui grid" style = {{"margin-top": "0rem", "margin-left": "0.5rem"}}>
+                <div className="twelve wide column">
+                    <DrawArea fullscreen={true}  currentColor = {this.state.currentColor} handleChange = {this.handleChange}/>
+                </div>
+                <div className="three wide column">
+                  <PlayerSection />
+                </div>
             </div>
+          </div>
         )
     }
 }
