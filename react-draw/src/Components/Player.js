@@ -12,7 +12,7 @@ export default class Player extends Component {
             username: e.target[0].value,
             description: e.target[1].value
         }}, returnOfTheBackend => {
-            console.log(returnOfTheBackend)
+            //console.log(returnOfTheBackend)
         });
     }
   
@@ -32,7 +32,7 @@ export default class Player extends Component {
                 <div>
                     <label>
                         Username:
-                        <input  id="username" name="username" type="text" />
+                        <input  id="username" name="username" type="text" style = {{ "margin-right": "1rem"}}/>
                     </label>
                     <label>
                         Bio:
