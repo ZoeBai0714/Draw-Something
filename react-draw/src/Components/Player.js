@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import socketIO from 'socket.io-client';
 
-const io = socketIO('http://10.185.1.60:3000/')
+const io = socketIO('http://localhost:3000/')
 window.io = io
 
 export default class Player extends Component {
