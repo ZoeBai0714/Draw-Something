@@ -304,6 +304,7 @@ export default class DrawArea extends React.Component{
             <div className = "ui grid" style = {{"margin-top": "1rem"}}>
             {/* <div className = "row" style = {{"margin-top": "1rem"}}> */}
               <div className="five wide column">
+                <div>
                 <Brush handleInputChange = {this.handleInputChange}
                       minWidth={this.state.minWidth}
                       select = {this.select}
@@ -312,6 +313,7 @@ export default class DrawArea extends React.Component{
                       canvas = {this.canvas}
                       mode = {this.state.mode}
                 />
+                </div>
               </div>
               <div className="three wide column" style = {{"margin-left": "1rem"}}>
                 <ColorPicker currentColor = {this.state.currentColor} handleChange = {this.props.handleChange} />

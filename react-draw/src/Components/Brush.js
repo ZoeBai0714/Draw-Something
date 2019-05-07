@@ -19,7 +19,7 @@ const Brush  = (props) =>{
         flexDirection: "column",
         justifyContent: "space-between",
         width: "100%",
-        height: "100%",
+        height: "30%",
         padding: "10px",
         borderRadius: "0 0 10px 5px",
         position: "absolute",
