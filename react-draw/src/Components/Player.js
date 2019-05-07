@@ -12,7 +12,7 @@ export default class Player extends Component {
             username: e.target[0].value,
             description: e.target[1].value
         }}, returnOfTheBackend => {
-            console.log(returnOfTheBackend)
+            //console.log(returnOfTheBackend)
         });
     }
   

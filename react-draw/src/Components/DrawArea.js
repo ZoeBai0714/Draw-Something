@@ -1,7 +1,10 @@
 import React from 'react';
 import '../DrawArea.css'
 import Brush from './Brush';
-    
+import socketIO from 'socket.io-client'
+
+const io = socketIO('http://localhost:3000/')
+window.io = io
 
 export default class DrawArea extends React.Component{
   
@@ -9,7 +12,7 @@ export default class DrawArea extends React.Component{
       isDrawing: false,
       lastX: 0,
       lastY: 0,
-      canvasURL: "test ",
+      canvasURL: null,
       hue: 1,
       direction: true,
       controlDisplay: "none",
@@ -112,12 +115,23 @@ export default class DrawArea extends React.Component{
         } 
       
       }
-    
+
+      // testing state buffer
+      const canvasDraw = document.querySelector("#drawing")
+      //const objectURL = URL.createObjectURL(canvasDraw.toBlob())
+      //console.log(objectURL)
+      var image = new Image()
+      let url = canvasDraw.toDataURL()
+      console.log(image.src)
+      const data = image.src
+      image.src = url
+// console.log(url)
+      // set canvasURL state 
       this.setState({   
          hue: hue,
          lastX: e.nativeEvent.offsetX,
          lastY: e.nativeEvent.offsetY,
-         canvasURL: canvas.toDataURL()
+         canvasURL: url
       })
     }
   
@@ -209,9 +223,15 @@ export default class DrawArea extends React.Component{
    }
 
 
+   sendState(){
+    io.emit('canvas.update', this.state.canvasURL)
+    //console.log(this.state.canvasURL)
+  }
+
 
   render(){
-    console.log(this.state)
+    this.sendState()
+    // console.log(this.state)
       return(
           <div /*style = {{height:'100%',width:'70%'}} */ /* right:'0px', position: 'absolute'}} */>
             <canvas onMouseMove = {this.draw} 
@@ -227,6 +247,7 @@ export default class DrawArea extends React.Component{
                    ctx = {this.ctx}
                    canvas = {this.canvas}
             />
+            <img src={this.state.canvasURL}></img>
          </div>
         
       )
