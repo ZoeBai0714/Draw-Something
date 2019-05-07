@@ -10,7 +10,8 @@ export default class Player extends Component {
     sendState(e) {
         io.emit('welcome.index', {state: {
             username: e.target[0].value,
-            description: e.target[1].value
+            description: e.target[1].value,
+            avatar: e.target[2].value
         }}, returnOfTheBackend => {
             //console.log(returnOfTheBackend)
         });
@@ -22,6 +23,7 @@ export default class Player extends Component {
         this.sendState(e)
         e.target[0].value = " "
         e.target[1].value = " "
+        e.target[2].value = " "
     }
 
 
@@ -36,7 +38,11 @@ export default class Player extends Component {
                     </label>
                     <label>
                         Bio:
-                        <input id="description" name="description" type="text"/>
+                        <input id="description" name="description" type="text" style = {{ "margin-right": "1rem"}}/>
+                    </label>
+                    <label>
+                        Avatar:
+                        <input id="description" name="description" type="text" style = {{ "margin-right": "1rem"}} />
                     </label>
                     <button type="submit">Log in</button>
                 </div>
