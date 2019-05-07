@@ -93,12 +93,3 @@ const Brush  = (props) =>{
 
 export default Brush
 
-/*
-   <select className = "select" onChange = {(e)=>this.change(e)}>
-                <option> Choose your filter </option>
-                <option value = "byGreased"> Filter by Grease </option>
-                <option value = "byWeight">Sort by Weight</option>
-                <option value = "byName">Sort by Name</option>
-           </select>
-
-*/
