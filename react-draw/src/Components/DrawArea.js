@@ -134,7 +134,7 @@ export default class DrawArea extends React.Component{
       console.log(image.src)
       const data = image.src
       image.src = url
-// console.log(url)
+      // console.log(url)
       // set canvasURL state 
       this.setState({   
          hue: hue,
@@ -142,12 +142,34 @@ export default class DrawArea extends React.Component{
          lastY: e.nativeEvent.offsetY,
          canvasURL: url
       })
+  
+      io.emit('canvas.update', this.state.canvasURL)
+
     }
   
- 
+    // work on realtime canvas
+    
+    drawCanvas() {
+      io.on('canvas.draw', url => {
+        const canvas = this.canvas()
+        const ctx = this.ctx()
+        var image = new Image()
+        image.src = url
+        ctx.drawImage(image, 0, 0)
+      })
+    }
+    //*/
 
 
-
+    /*
+              work on a updater for canvas 
+      updateCanvas(url) {
+        
+      }                               to reduce lag
+                                           and unnecessary events
+    
+                                        
+    */
   
   
 
@@ -289,15 +311,20 @@ export default class DrawArea extends React.Component{
     };
     */
   
+  handleMouseUp = () => {
+    this.drawCanvas()
+    this.setState({isDrawing: false})
+  } 
 
   render(){
     console.log(this.state.minWidth)
+       //test realtime canvas
       return(  
           <div >
             <canvas 
                     onMouseMove = {this.draw} 
                     onMouseDown = {(e)=> this.getMousePosition(e)} 
-                    onMouseUp = {() => this.setState({isDrawing: false})}
+                    onMouseUp = {this.handleMouseUp}
                     onMouseOut = {() => this.setState({isDrawing: false})}  
                     id="drawing">
             </canvas>
