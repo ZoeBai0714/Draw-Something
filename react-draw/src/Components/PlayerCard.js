@@ -15,7 +15,7 @@ export default class PlayerCard extends React.Component {
                     </div>
                     <div className="content">
                         <h3>{this.props.player.name}</h3>
-                        <div className="meta text-wrap">
+                        <div className="description">
                             <p>Bio: {this.props.player.description}</p>
                         </div>
                     </div>
