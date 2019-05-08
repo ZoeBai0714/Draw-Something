@@ -2,9 +2,9 @@
 *, *:before, *:after{
   box-sizing:border-box;
 }
-body{
+#backgroundIMG{
   font-family: 'Lato', sans-serif;
-  background-image: url('./2.jpg')
+  background-image: url('./2.jpg') 
 }
 div.foo{
   width: 90%;

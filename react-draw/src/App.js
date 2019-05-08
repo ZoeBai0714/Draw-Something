@@ -6,7 +6,7 @@ import Title from './Components/Title'
 import {BrowserRouter, Route} from 'react-router-dom'
 
 const MainPage = () => (
-  <div>
+  <div id = "backgroundIMG">
     <Title/>
     <Login />
     <DrawerScreen/>>
