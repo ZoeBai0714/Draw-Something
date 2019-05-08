@@ -51,6 +51,7 @@ const Brush  = (props) =>{
                  <option value = "shadow">Shadow</option>
                  <option value = "random dots">Random Dots</option>
                  <option value = "stars">Stars</option>
+                 <option value = "stars rainbow">Rainbow Stars</option>
               </select>
               </div>
         </div>

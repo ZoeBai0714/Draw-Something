@@ -28,6 +28,7 @@ export default class DrawArea extends React.Component{
       //maxWidth: 100,
       minWidth: 5,
       mode:"",
+      rainbow:false
       //none:true, //default style
       //shadow: false,
       //randomDots:false
@@ -70,7 +71,7 @@ export default class DrawArea extends React.Component{
           this.clearStyle()
           const ctx = this.ctx()
           ctx.clearRect(0, 0, this.canvas().width, this.canvas().height)
-          ctx.drawImage(image, 0, 0, this.canvas().width, this.canvas().height) // take in four arguments to fit the canvas size for all browsers
+          ctx.drawImage(image, 0, 0, this.canvas().width, this.canvas().height) // take in four arguments to fit the canvas size for all browsers. This is to stretch the img.
         }
         console.log('CANVAS RECEIVED')
       })
@@ -121,7 +122,7 @@ export default class DrawArea extends React.Component{
           ctx.stroke();
           ctx.strokeStyle = this.props.currentColor || 'red'//`hsl(${this.state.hue}, 100%, 50%)`
           this.randomDots(e)
-        }else if(this.state.mode == "stars"){
+        }else if(this.state.mode == "stars" || this.state.mode == "stars rainbow"){
           this.addRandomPoint(e)
           this.star(e) //call draw star
         }
@@ -164,19 +165,28 @@ export default class DrawArea extends React.Component{
 
       if(value == "shadow"){
         this.setState({
+          rainbow:false,
           mode: "shadow"
         })
       }else if(value == "random dots"){
         this.setState({
+          rainbow:false,
           mode: "random dots"
         })
       }else if(value == "none"){
         this.setState({
+          rainbow:false,
           mode: ""
         })
       }else if(value == "stars"){
         this.setState({
+          rainbow:false,
           mode:"stars"
+        })
+      }else if(value == "stars rainbow"){
+        this.setState({
+          mode:"stars rainbow",
+          rainbow:true
         })
       }
 
@@ -239,16 +249,16 @@ export default class DrawArea extends React.Component{
    }
 
     drawStar = (options)=> {
-    let ctx = this.ctx()
-    var length = 15;
-    ctx.save();
-    ctx.translate(options.x, options.y);
-    ctx.beginPath();
-    ctx.globalAlpha = options.opacity;
-    ctx.rotate(Math.PI / 180 * options.angle);
-    ctx.scale(options.scale, options.scale);
-    ctx.strokeStyle = this.props.currentColor || options.color;
-    ctx.lineWidth = options.width;
+      let ctx = this.ctx()
+      var length = 15;
+      ctx.save();
+      ctx.translate(options.x, options.y);
+      ctx.beginPath();
+      ctx.globalAlpha = options.opacity;
+      ctx.rotate(Math.PI / 180 * options.angle);
+      ctx.scale(options.scale, options.scale);
+      ctx.strokeStyle = this.state.rainbow? options.color : this.props.currentColor;
+      ctx.lineWidth = options.width;
     for (var i = 5; i--;) {
       ctx.lineTo(0, length);
       ctx.translate(0, length);
@@ -257,10 +267,10 @@ export default class DrawArea extends React.Component{
       ctx.translate(0, -length);
       ctx.rotate(-(Math.PI * 6 / 10));
     }
-    ctx.lineTo(0, length);
-    ctx.closePath();
-    ctx.stroke();
-    ctx.restore();
+      ctx.lineTo(0, length);
+      ctx.closePath();
+      ctx.stroke();
+      ctx.restore();
 }
 
    addRandomPoint(e) {
