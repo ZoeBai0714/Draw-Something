@@ -18,8 +18,8 @@ class App extends React.Component {
   render() {
   return (
     <BrowserRouter>
-      <Route path = '/' component = {Home}/>
-      <Route path = '/draw' component = {MainPage}/>
+      <Route exact path = '/draw' component = {MainPage}/>
+      <Route exact path = '/' component = {Home}/>
     </BrowserRouter>
   );
   }
