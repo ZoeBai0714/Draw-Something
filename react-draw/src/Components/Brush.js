@@ -29,7 +29,8 @@ const Brush  = (props) =>{
     const BrushWidth = (props) =>{
       const strokeControlStyle = {
         display: "flex",
-        flexDirection: "row"
+        flexDirection: "row",
+        
       }
 
       const inputStyle = {

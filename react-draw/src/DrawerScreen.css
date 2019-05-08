@@ -4,7 +4,7 @@
 }
 body{
   font-family: 'Lato', sans-serif;
-    ;
+  background-image: url('./frame2.jpg')
 }
 div.foo{
   width: 90%;
@@ -69,3 +69,4 @@ div.foo{
     rotateZ(0deg)
     skew(0deg,22deg);
 }
+

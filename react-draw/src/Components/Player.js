@@ -1,10 +1,8 @@
 import React, {Component} from 'react';
 import socketIO from 'socket.io-client';
 
-//const io = socketIO('http://10.185.1.153:3000/')
+const io = socketIO('http://10.185.5.103:3000/')
 //const io = socketIO('localhost:3000/')
-const io = socketIO('http://172.20.20.20:3000/')
-
 window.io = io
 
 export default class Player extends Component {
@@ -28,6 +26,7 @@ export default class Player extends Component {
         e.target[1].value = " "
         e.target[2].value = " "
     }
+   
 
 
     render() {
@@ -35,15 +34,15 @@ export default class Player extends Component {
             <div className="Person" style = {{"margin": "0.5rem"}}>
                 <form onSubmit = {e=>{this.handleSubmit(e)}}>
                 <div>
-                    <label>
-                        Username:
+                    <label className = "label">
+                        Username: 
                         <input  id="username" name="username" type="text" style = {{ "margin-right": "1rem"}}/>
                     </label>
-                    <label>
+                    <label className = "label">
                         Bio:
                         <input id="description" name="description" type="text" style = {{ "margin-right": "1rem"}}/>
                     </label>
-                    <label>
+                    <label className = "label">
                         Avatar:
                         <input id="description" name="description" type="text" style = {{ "margin-right": "1rem"}} />
                     </label>
