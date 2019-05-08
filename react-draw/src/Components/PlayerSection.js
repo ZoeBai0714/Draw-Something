@@ -2,8 +2,7 @@ import React from 'react'
 import PlayerCard from './PlayerCard';
 import socketIO from 'socket.io-client'
 import "../PlayerSection.css"
-//const io = socketIO('http://localhost:3000')
-const io = socketIO('10.185.5.64:3000/')
+const io = socketIO('http://localhost:3000')
 
 window.io = io
 

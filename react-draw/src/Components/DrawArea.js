@@ -5,8 +5,7 @@ import ColorPicker from '../Components/ColorPicker';
     
 import socketIO from 'socket.io-client'
 
-//const io = socketIO('http://localhost:3000/')
-const io = socketIO('10.185.5.64:3000/')
+const io = socketIO('http://localhost:3000/')
 
 window.io = io
 
