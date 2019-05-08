@@ -15,7 +15,7 @@ io.on("connection", socket => {
     socket.on('welcome.index', (userLogin, respond) => {
         console.log(`New user created:`)
         //console.log(userLogin)
-        Player.create({name: userLogin.state.username, description: userLogin.state.description})
+        Player.create({name: userLogin.state.username, description: userLogin.state.description, avatar: userLogin.state.avatar})
             .then( user => {
                 io.emit('users.new',user)
                 respond(userLogin)
