@@ -40,23 +40,6 @@ export default class DrawArea extends React.Component{
       return this.canvas().getContext("2d");
     }
 
-  /*
-  getDataURL = () => {
-    const canvas = this.canvas()
-    const dataUrl = canvas.toDataURL()
-    return dataUrl
-  }
-  
-  changeStateURL = () => {
-    const canvas = this.canvas()
-    console.log(this.state.canvasURL)
-    console.log(canvas.toDataURL())
-    this.setState({
-      canvasURL: canvas.toDataURL()
-    })
-  }
-  */
-
     componentDidMount = () =>{
       const canvas = this.canvas()
       const ctx = this.ctx()
@@ -93,18 +76,16 @@ export default class DrawArea extends React.Component{
     }
 
   //convert DOM pixel into canvas pixel, that's why the offset position is not right
-    getMousePosition = (e) =>{
-    //const canvas = document.querySelector("#drawing");
-    //let rect = canvas.getBoundingClientRect();
-    //let scaleX = canvas.width / rect.width;    // relationship bitmap vs. element for X
-    //let scaleY = canvas.height / rect.height;  // relationship bitmap vs. element for Y
-     
+    getMousePosition = (e) =>{  
       this.setState({
         isDrawing: true,
         lastX: e.nativeEvent.offsetX,
         lastY: e.nativeEvent.offsetY  // been adjusted to be relative to element
       }) 
+
+  
     }
+
 
     drawMain = (e) =>{
       const ctx = this.ctx();
@@ -117,7 +98,7 @@ export default class DrawArea extends React.Component{
     }
   
 
-    draw = (e) =>{
+    draw = (e) =>{ //still in mouseDown
       const ctx = this.ctx();
       let hue = this.state.hue;
       this.ctx().lineWidth = this.state.minWidth // MUST be here, so everytime before the first stroke, it will check the new width first
@@ -140,7 +121,8 @@ export default class DrawArea extends React.Component{
           ctx.strokeStyle = this.props.currentColor || 'red'//`hsl(${this.state.hue}, 100%, 50%)`
           this.randomDots(e)
         }else if(this.state.mode == "stars"){
-          this.star()
+          this.addRandomPoint(e)
+          this.star(e) //call draw star
         }
       
       }
@@ -167,18 +149,11 @@ export default class DrawArea extends React.Component{
  
 
 
-
-  
-  
-
-
-
   //functions for Brush
   handleInputChange = (e) =>{
       const ctx = this.ctx();
       let name = e.target.name
       let value = e.target.value
-
       this.setState({
         //mode:value 
         [name]:value
@@ -250,17 +225,68 @@ export default class DrawArea extends React.Component{
   } 
    }
 
-   star = () =>{
-     console.log('you reached me')
+   
+   star = (e) =>{
+    //mouseMove
+    let points = this.addRandomPoint(e)
+    let ctx = this.ctx()
+    //loop
+      //ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+      for (var i = 0; i < points.length; i++) {
+        this.drawStar(points[i]);
+      }
    }
 
+    drawStar = (options)=> {
+    let ctx = this.ctx()
+    var length = 15;
+    ctx.save();
+    ctx.translate(options.x, options.y);
+    ctx.beginPath();
+    ctx.globalAlpha = options.opacity;
+    ctx.rotate(Math.PI / 180 * options.angle);
+    ctx.scale(options.scale, options.scale);
+    ctx.strokeStyle = this.props.currentColor || options.color;
+    ctx.lineWidth = options.width;
+    for (var i = 5; i--;) {
+      ctx.lineTo(0, length);
+      ctx.translate(0, length);
+      ctx.rotate((Math.PI * 2 / 10));
+      ctx.lineTo(0, -length);
+      ctx.translate(0, -length);
+      ctx.rotate(-(Math.PI * 6 / 10));
+    }
+    ctx.lineTo(0, length);
+    ctx.closePath();
+    ctx.stroke();
+    ctx.restore();
+}
+
+   addRandomPoint(e) {
+    function getRandomInt(min, max) {
+      return Math.floor(Math.random() * (max - min + 1)) + min;
+     }
+
+    let points = [ ], radius = 15
+    points.push({ 
+      x: e.nativeEvent.offsetX, 
+      y: e.nativeEvent.offsetY, 
+      angle: getRandomInt(0, 180),
+      width: getRandomInt(1,10),
+      opacity: Math.random(),
+      scale: getRandomInt(1, 20) / 10,
+      color: ('rgb('+getRandomInt(0,255)+','+getRandomInt(0,255)+','+getRandomInt(0,255)+')')
+    });
+    return points
+  }
+  
    handleMouseUp = () => {
     io.emit('canvas.update', this.state.canvasURL)
     this.setState({isDrawing: false})
-  }
+   }
 
   render(){
-    //console.log(this.state.minWidth)
+    //console.log(this.state.mode)
       return(  
           <div >
             <canvas style = {{backgroundColor:'white'}}
@@ -294,4 +320,74 @@ export default class DrawArea extends React.Component{
       )
   }
 }
+
+/*
+  // function drawStar(options) {
+  //     var length = 15;
+  //     ctx.save();
+  //     ctx.translate(options.x, options.y);
+  //     ctx.beginPath();
+  //     ctx.globalAlpha = options.opacity;
+  //     ctx.rotate(Math.PI / 180 * options.angle);
+  //     ctx.scale(options.scale, options.scale);
+  //     ctx.strokeStyle = options.color;
+  //     ctx.lineWidth = options.width;
+  //     for (var i = 5; i--;) {
+  //       ctx.lineTo(0, length);
+  //       ctx.translate(0, length);
+  //       ctx.rotate((Math.PI * 2 / 10));
+  //       ctx.lineTo(0, -length);
+  //       ctx.translate(0, -length);
+  //       ctx.rotate(-(Math.PI * 6 / 10));
+  //     }
+  //     ctx.lineTo(0, length);
+  //     ctx.closePath();
+  //     ctx.stroke();
+  //     ctx.restore();
+  // }
+
+
+
+// function getRandomInt(min, max) {
+//  return Math.floor(Math.random() * (max - min + 1)) + min;
+// }
+
+//var el = document.getElementById('c');
+//var ctx = el.getContext('2d');
+
+// var isDrawing, points = [ ], radius = 15;
+
+// function addRandomPoint(e) {
+//   points.push({ 
+//     x: e.clientX, 
+//     y: e.clientY, 
+//     angle: getRandomInt(0, 180),
+//     width: getRandomInt(1,10),
+//     opacity: Math.random(),
+//     scale: getRandomInt(1, 20) / 10,
+//     color: ('rgb('+getRandomInt(0,255)+','+getRandomInt(0,255)+','+getRandomInt(0,255)+')')
+//   });
+// }
+
+// el.onmousedown = function(e) {
+//   isDrawing = true;
+//   addRandomPoint(e);
+// };
+
+
+el.onmousemove = function(e) {
+  if (!isDrawing) return;
+  
+  addRandomPoint(e);
+  
+  ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+  for (var i = 0; i < points.length; i++) {
+    drawStar(points[i]);
+  }
+};
+el.onmouseup = function() {
+  isDrawing = false;
+  points.length = 0;
+};
+*/
 
