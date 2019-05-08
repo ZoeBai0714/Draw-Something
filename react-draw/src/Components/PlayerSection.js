@@ -2,7 +2,8 @@ import React from 'react'
 import PlayerCard from './PlayerCard';
 import socketIO from 'socket.io-client'
 import "../PlayerSection.css"
-const io = socketIO('http://localhost:3000')
+//const io = socketIO('http://localhost:3000/')
+const io = socketIO('http://10.185.1.153:3000/')
 window.io = io
 
 export default class PlayerSection extends React.Component {
@@ -13,7 +14,7 @@ export default class PlayerSection extends React.Component {
 
     changeState = () => {
         io.emit('users.index', {state: this.state.players}, returnPlayers => {
-            console.log(returnPlayers)
+            //console.log(returnPlayers)
             this.setState({players: returnPlayers})
         })
         io.on('users.new',user =>{
@@ -31,7 +32,7 @@ export default class PlayerSection extends React.Component {
     // }
 
     render() {
-        console.log(this.state.players)
+        //console.log(this.state.players)
         return (
             <div id = "player-section">
                 {this.state.players.map(player => (<PlayerCard player = {player}/>))}            

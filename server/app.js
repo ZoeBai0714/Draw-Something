@@ -5,7 +5,6 @@ const socketIO = require("socket.io");
 const cors = require('cors');
 app.use(cors());
 
-
 const server = http.createServer(app); // initialize server
 const io = socketIO(server); // create socket using server ^
 
@@ -13,7 +12,6 @@ const loggedInUsers = {}
 
 io.on("connection", socket => {
 
-    console.log('User Connected')
     socket.on('welcome.index', (userLogin, respond) => {
         console.log(`New user created:`)
         //console.log(userLogin)
@@ -38,25 +36,31 @@ io.on("connection", socket => {
         respond(players)
     })
 
-    
+   
     socket.on('canvas.update',(stateURL) => {
-        //console.log(socket.id)
-        //console.log(stateURL)
-        //console.log(loggedInUsers.socketId)
+        
         const pl = Player.findByPk(loggedInUsers.socketId)
             .then((playerData) => {
-                //console.log(pl)
                 //console.log('Player Data:')
-                //console.log(playerData)
                 playerData.update({
                    canvasData: stateURL
                 })
             })
             io.emit('canvas.draw', stateURL)
-            console.log('emit canvas')
     })
     //socket.on('disconnect', () => console.log("Client disconnected"))
 });
+
+  /*
+    let line_history = [];
+    for (let i in line_history) {
+        socket.emit('draw_line', { line: line_history[i] } );
+     }
+     socket.on('draw_line', function (data) {
+        line_history.push(data.line);
+        io.emit('draw_line', { line: data.line });
+     });
+  */
 
 const port = 3000
 server.listen(port, () => console.log(`Listening on port ${port}`));

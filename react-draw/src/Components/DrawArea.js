@@ -5,7 +5,8 @@ import ColorPicker from '../Components/ColorPicker';
     
 import socketIO from 'socket.io-client'
 
-const io = socketIO('http://localhost:3000/')
+const io = socketIO('http://10.185.1.153:3000/')
+//const io = socketIO('http://localhost:3000')
 window.io = io
 
 
@@ -32,7 +33,7 @@ export default class DrawArea extends React.Component{
     }
 
     canvas = ()=> {
-      return document.querySelector("#drawing");
+      return document.querySelector("#drawing1");
     }
 
     ctx = () => {
@@ -58,6 +59,7 @@ export default class DrawArea extends React.Component{
   */
 
     componentDidMount = () =>{
+      //this.drawCanvas();
       const canvas = this.canvas()
       const ctx = this.ctx()
       //set the canvas size here, we compare it to the screen size so it will not affect offset X and Y when we draw
@@ -70,6 +72,7 @@ export default class DrawArea extends React.Component{
       ctx.lineJoin = "round";
       ctx.lineCap = "round";
       ctx.lineWidth = this.state.minWidth//Number(this.state.minWidth)
+      this.drawCanvas();
     } 
 
   //convert DOM pixel into canvas pixel, that's why the offset position is not right
@@ -126,12 +129,12 @@ export default class DrawArea extends React.Component{
       }
 
       // testing state buffer
-      const canvasDraw = document.querySelector("#drawing")
+      const canvasDraw = document.querySelector("#drawing1")
       //const objectURL = URL.createObjectURL(canvasDraw.toBlob())
       //console.log(objectURL)
       var image = new Image()
-      let url = canvasDraw.toDataURL()
-      console.log(image.src)
+      let url = canvasDraw.toDataURL() //connected to backend
+      //console.log(image.src)
       const data = image.src
       image.src = url
       // console.log(url)
@@ -142,38 +145,46 @@ export default class DrawArea extends React.Component{
          lastY: e.nativeEvent.offsetY,
          canvasURL: url
       })
-  
-      io.emit('canvas.update', this.state.canvasURL)
-
+      io.emit('draw_line', { line: [ this.state.lastX, this.state.lastY ] })//try to connect to backend
+      //io.emit('canvas.update', this.state.canvasURL)
     }
   
     // work on realtime canvas
+    /*
+    drawCanvas = () =>{
+      io.on('draw_line',  (data)=> {
+        var line = data.line;
+        const context = this.ctx()
+        context.beginPath();
+        context.lineWidth = this.state.minWidth;
+        context.moveTo(line[0].this.state.lastX , line[0].this.state.lastY );
+        context.lineTo(line[1].this.state.lastX , line[1].this.state.lastY );
+        context.stroke();
+     });
+    }
+   */
     
-    drawCanvas() {
+    drawCanvas=()=> { 
+      //io.emit('canvas.update', this.state.canvasURL)
       io.on('canvas.draw', url => {
-        const canvas = this.canvas()
-        const ctx = this.ctx()
+        //const canvas = this.canvas()
+       
         var image = new Image()
         image.src = url
-        ctx.drawImage(image, 0, 0)
+        //console.log(url)
+        //console.log(image)
+        image.onload = () =>{
+          this.clearStyle()
+          const ctx = this.ctx()
+
+          ctx.clearRect(0, 0, this.canvas().width, this.canvas().height)
+          ctx.drawImage(image, 0, 0)
+        }
+        //console.log('CANVAS RECEIVED')
       })
     }
-    //*/
-
-
-    /*
-              work on a updater for canvas 
-      updateCanvas(url) {
-        
-      }                               to reduce lag
-                                           and unnecessary events
     
-                                        
-    */
   
-  
-
-
 
   //functions for Brush
   handleInputChange = (e) =>{
@@ -210,6 +221,7 @@ export default class DrawArea extends React.Component{
   // call this function first everytime a new brush style is triggered
   clearStyle = (e) =>{
     const ctx = this.ctx();
+    ctx.globalAlpha = 1;
     ctx.shadowColor = '';   //get rid of shadow style if any
     ctx.shadowBlur = 0;
     ctx.fillStyle = this.props.currentColor ||'red'
@@ -250,75 +262,17 @@ export default class DrawArea extends React.Component{
       ctx.fill()
   } 
    }
-/*
-  stars = (e) =>{
-    const ctx = this.ctx()
-    //const canvas = this.canvas()
-    const drawStar = (x, y) => {
-      var length = 15;
-      ctx.save();
-      ctx.translate(x, y);
-      ctx.beginPath();
-      ctx.rotate((Math.PI * 1 / 10));
-      for (var i = 5; i--;) {
-        ctx.lineTo(e.nativeEvent.offsetX, e.nativeEvent.offsetY);
-        ctx.translate(0, length);
-        ctx.rotate((Math.PI * 2 / 10));
-        ctx.lineTo(e.nativeEvent.offsetX, e.nativeEvent.offsetY);
-        ctx.translate(0, -length);
-        ctx.rotate(-(Math.PI * 6 / 10));
-      }
-      ctx.lineTo(e.nativeEvent.offsetX, e.nativeEvent.offsetY);
-      ctx.closePath();
-      ctx.stroke();
-      //ctx.restore();
-    }
-   let getRandomInt= (min, max) => {
-      return Math.floor(Math.random() * (max - min + 1)) + min;  // don't need this?
-   }
 
-   ctx.lineJoin = ctx.lineCap = 'round';
-   ctx.fillStyle = 'red'; // need to change the color
-   let points = [ ], radius = 15;
-    
-   points.push({ 
-    x: e.nativeEvent.offsetX, 
-    y: e.nativeEvent.offsetY,
-    radius: getRandomInt(5, 20)
-  });
-
-   /*
-    canvas.onmousedown = (e) => {
-      points.push({ x: e.clientX, y: e.clientY });
-    };
-   */
-    //canvas.onmousemove = (e)=> {
-      //if (!this.state.isDrawing) return;
-      
-     // points.push({ x: e.clientX, y: e.clientY });
-      
-     // ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
-    // for (var i = 0; i < points.length; i++){
-    //    drawStar(points[i].x, points[i].y);
-     // }
-    //} 
-     // }
-    //};
-    /*
-    canvas.onmouseup = () => {
-      this.setState({isDrawing:false})
-      points.length = 0;
-    };
-    */
   
   handleMouseUp = () => {
-    this.drawCanvas()
+    io.emit('canvas.update', this.state.canvasURL)
     this.setState({isDrawing: false})
   } 
 
   render(){
-    console.log(this.state.minWidth)
+    //console.log(this.state.minWidth)
        //test realtime canvas
+       //setInterval(this.handleMouseUp, 1000)
       return(  
           <div >
             <canvas 
@@ -326,7 +280,14 @@ export default class DrawArea extends React.Component{
                     onMouseDown = {(e)=> this.getMousePosition(e)} 
                     onMouseUp = {this.handleMouseUp}
                     onMouseOut = {() => this.setState({isDrawing: false})}  
-                    id="drawing">
+                    id="drawing1">
+            </canvas>
+            <canvas 
+                    onMouseMove = {this.draw} 
+                    onMouseDown = {(e)=> this.getMousePosition(e)} 
+                    onMouseUp = {this.handleMouseUp}
+                    onMouseOut = {() => this.setState({isDrawing: false})}  
+                    id="drawing2">
             </canvas>
             <div className = "ui grid" style = {{"margin-top": "1rem"}}>
             {/* <div className = "row" style = {{"margin-top": "1rem"}}> */}
