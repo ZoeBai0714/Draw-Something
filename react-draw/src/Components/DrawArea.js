@@ -5,7 +5,8 @@ import ColorPicker from '../Components/ColorPicker';
     
 import socketIO from 'socket.io-client'
 
-const io = socketIO('http://localhost:3000/')
+//const io = socketIO('http://localhost:3000/')
+const io = socketIO('10.185.5.103:3000/')
 
 window.io = io
 
@@ -45,7 +46,7 @@ export default class DrawArea extends React.Component{
       const ctx = this.ctx()
       //set the canvas size here, we compare it to the screen size so it will not affect offset X and Y when we draw
       if(this.props.fullscreen === true){
-        canvas.width = window.innerWidth * 0.70; 
+        canvas.width =  window.innerWidth * 0.70; 
         canvas.height = window.innerHeight * 0.75;
     }
     //set the draw stroke 
@@ -69,7 +70,7 @@ export default class DrawArea extends React.Component{
           this.clearStyle()
           const ctx = this.ctx()
           ctx.clearRect(0, 0, this.canvas().width, this.canvas().height)
-          ctx.drawImage(image, 0, 0)
+          ctx.drawImage(image, 0, 0, this.canvas().width, this.canvas().height) // take in four arguments to fit the canvas size for all browsers
         }
         console.log('CANVAS RECEIVED')
       })
