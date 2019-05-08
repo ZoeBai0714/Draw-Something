@@ -257,7 +257,7 @@ export default class DrawArea extends React.Component{
     console.log(this.state.minWidth)
       return(  
           <div >
-            <canvas 
+            <canvas style = {{backgroundColor:'white'}}
                     onMouseMove = {this.draw} 
                     onMouseDown = {(e)=> this.getMousePosition(e)} 
                     onMouseUp = {this.handleMouseUp}
