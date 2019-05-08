@@ -42,14 +42,15 @@ io.on("connection", socket => {
         //console.log(socket.id)
         //console.log(stateURL)
         //console.log(loggedInUsers.socketId)
-        const pl = Player.findByPk(loggedInUsers.socketId)
+        Player.findByPk(loggedInUsers.socketId)
             .then((playerData) => {
                 //console.log(pl)
-                //console.log('Player Data:')
-                //console.log(playerData)
+                console.log('Player Data:')
+                console.log(playerData)
                 playerData.update({
                    canvasData: stateURL
                 })
+
             })
             io.emit('canvas.draw', stateURL)
             console.log('emit canvas')
