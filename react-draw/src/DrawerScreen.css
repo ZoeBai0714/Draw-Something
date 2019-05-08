@@ -10,11 +10,12 @@ div.foo{
   width: 90%;
   margin: 0 auto;
   text-align: center;
+  margin-bottom: 2.75rem;
 }
 .letter{
   display: inline-block;
   font-weight: 900;
-  font-size: 8em;
+  font-size: 7em;
   margin-top: 3rem;
   margin-right: .5rem;
   position: relative;

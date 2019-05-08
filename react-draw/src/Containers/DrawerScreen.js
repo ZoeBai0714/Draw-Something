@@ -27,7 +27,7 @@ export default class DrawerScreen extends React.Component {
                   <div className="twelve wide column">
                       <DrawArea fullscreen={true}  currentColor = {this.state.currentColor} handleChange = {this.handleChange}/>
                   </div>
-                  <div className="four wide column">
+                  <div className="three wide column">
                     <PlayerSection />
                   </div>
               </div>
