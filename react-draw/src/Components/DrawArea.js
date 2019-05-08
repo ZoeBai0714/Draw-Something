@@ -5,7 +5,7 @@ import ColorPicker from '../Components/ColorPicker';
     
 import socketIO from 'socket.io-client'
 
-const io = socketIO('http://10.185.5.161:3000/')
+const io = socketIO('http://localhost:3000/')
 window.io = io
 
 
@@ -58,7 +58,6 @@ export default class DrawArea extends React.Component{
   */
 
     componentDidMount = () =>{
-      //this.drawCanvas();
       const canvas = this.canvas()
       const ctx = this.ctx()
       //set the canvas size here, we compare it to the screen size so it will not affect offset X and Y when we draw
@@ -71,7 +70,6 @@ export default class DrawArea extends React.Component{
       ctx.lineJoin = "round";
       ctx.lineCap = "round";
       ctx.lineWidth = this.state.minWidth//Number(this.state.minWidth)
-      this.drawCanvas();
     } 
 
   //convert DOM pixel into canvas pixel, that's why the offset position is not right
@@ -133,10 +131,10 @@ export default class DrawArea extends React.Component{
       //console.log(objectURL)
       var image = new Image()
       let url = canvasDraw.toDataURL()
-      //console.log(image.src)
+      console.log(image.src)
       const data = image.src
       image.src = url
-      // console.log(url)
+// console.log(url)
       // set canvasURL state 
       this.setState({   
          hue: hue,
@@ -144,44 +142,16 @@ export default class DrawArea extends React.Component{
          lastY: e.nativeEvent.offsetY,
          canvasURL: url
       })
-  
-      //io.emit('canvas.update', this.state.canvasURL)
     }
   
-    // work on realtime canvas
-    
-    drawCanvas=()=> { 
-      //io.emit('canvas.update', this.state.canvasURL)
-      io.on('canvas.draw', url => {
-        //const canvas = this.canvas()
-       
-        var image = new Image()
-        image.src = url
-        //console.log(url)
-        //console.log(image)
-        image.onload = () =>{
-          this.clearStyle()
-          const ctx = this.ctx()
-
-          ctx.clearRect(0, 0, this.canvas().width, this.canvas().height)
-          ctx.drawImage(image, 0, 0)
-        }
-        console.log('CANVAS RECEIVED')
-      })
-    }
-    //*/
+ 
 
 
-    /*
-              work on a updater for canvas 
-      updateCanvas(url) {
-        
-      }                               to reduce lag
-                                           and unnecessary events
-    
-                                        
-    */
+
   
+  
+
+
 
   //functions for Brush
   handleInputChange = (e) =>{
@@ -218,7 +188,6 @@ export default class DrawArea extends React.Component{
   // call this function first everytime a new brush style is triggered
   clearStyle = (e) =>{
     const ctx = this.ctx();
-    ctx.globalAlpha = 1;
     ctx.shadowColor = '';   //get rid of shadow style if any
     ctx.shadowBlur = 0;
     ctx.fillStyle = this.props.currentColor ||'red'
@@ -320,26 +289,22 @@ export default class DrawArea extends React.Component{
     };
     */
   
-  handleMouseUp = () => {
-    io.emit('canvas.update', this.state.canvasURL)
-    this.setState({isDrawing: false})
-  } 
 
   render(){
-    //console.log(this.state.minWidth)
-       //test realtime canvas
+    console.log(this.state.minWidth)
       return(  
           <div >
             <canvas 
                     onMouseMove = {this.draw} 
                     onMouseDown = {(e)=> this.getMousePosition(e)} 
-                    onMouseUp = {this.handleMouseUp}
+                    onMouseUp = {() => this.setState({isDrawing: false})}
                     onMouseOut = {() => this.setState({isDrawing: false})}  
                     id="drawing">
             </canvas>
             <div className = "ui grid" style = {{"margin-top": "1rem"}}>
             {/* <div className = "row" style = {{"margin-top": "1rem"}}> */}
               <div className="five wide column">
+                <div>
                 <Brush handleInputChange = {this.handleInputChange}
                       minWidth={this.state.minWidth}
                       select = {this.select}
@@ -348,6 +313,7 @@ export default class DrawArea extends React.Component{
                       canvas = {this.canvas}
                       mode = {this.state.mode}
                 />
+                </div>
               </div>
               <div className="three wide column" style = {{"margin-left": "1rem"}}>
                 <ColorPicker currentColor = {this.state.currentColor} handleChange = {this.props.handleChange} />

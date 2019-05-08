@@ -2,7 +2,7 @@ import React from 'react'
 import PlayerCard from './PlayerCard';
 import socketIO from 'socket.io-client'
 import "../PlayerSection.css"
-const io = socketIO('http://10.185.5.161:3000')
+const io = socketIO('http://localhost:3000')
 window.io = io
 
 export default class PlayerSection extends React.Component {

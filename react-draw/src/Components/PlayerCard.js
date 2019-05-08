@@ -9,7 +9,7 @@ export default class PlayerCard extends React.Component {
         return (
             
             
-                <div className="ui raised link card">
+                <div className="blue move ui raised link card">
                     <div className="image">
                         <img src={this.props.player.avatar} alt=""></img>
                     </div>
