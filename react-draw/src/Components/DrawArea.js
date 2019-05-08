@@ -139,6 +139,8 @@ export default class DrawArea extends React.Component{
           ctx.stroke();
           ctx.strokeStyle = this.props.currentColor || 'red'//`hsl(${this.state.hue}, 100%, 50%)`
           this.randomDots(e)
+        }else if(this.state.mode == "stars"){
+          this.star()
         }
       
       }
@@ -248,13 +250,17 @@ export default class DrawArea extends React.Component{
   } 
    }
 
+   star = () =>{
+     console.log('you reached me')
+   }
+
    handleMouseUp = () => {
     io.emit('canvas.update', this.state.canvasURL)
     this.setState({isDrawing: false})
   }
 
   render(){
-    console.log(this.state.minWidth)
+    //console.log(this.state.minWidth)
       return(  
           <div >
             <canvas style = {{backgroundColor:'white'}}
